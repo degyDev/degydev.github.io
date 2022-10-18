@@ -41,7 +41,7 @@ body {
     color: $body-font-color;
     font-size: $small-font-size;
     font-weight: $font-weight-bold;
-    padding: 8px 16px;
+    padding: 0;
     border-radius: 50px;
     letter-spacing: 0.2px;
 }
@@ -66,7 +66,7 @@ a {
 
 .navbar-brand {
 	.uil {
-		font-size: 40px;
+		font-size: 20px;
 	}
 }
 
@@ -141,6 +141,7 @@ b, strong {
     margin-top: 10px;
     width: 250px;
     position: relative;
+	text-align: center;
 }
 
 .animated-item {
@@ -157,13 +158,31 @@ b, strong {
     top: 0;
     right: 0;
     left: 0;
-    animation: BottomTotop 6s linear infinite 0s;
+    animation: BottomTotop 8s linear infinite 0s;
+	text-transform: uppercase;
     &:nth-child(2n+2) {
         animation-delay: 2s;
     }
-    &:nth-child(3n+3) {
-        animation-delay: 4s;
-    }
+	&:nth-child(3n+3) {
+		animation-delay: 4s;
+	}
+	&:nth-child(4n+4) {
+		animation-delay: 6s;
+	}
+}
+.colorChange{
+	animation: colorChangeWhite 6s linear infinite 0s;
+}
+.colorChange2{
+	animation: colorChangeWhite 8s linear infinite 0s;
+}
+.dark-mode {
+	.colorChange{
+		animation: colorChange 6s linear infinite 0s;
+	}
+	.colorChange2{
+		animation: colorChange 8s linear infinite 0s;
+	}
 }
 
 @keyframes BottomTotop {
@@ -174,6 +193,18 @@ b, strong {
     30% { opacity: 0; transform: translateY(5px); }
     80% { opacity: 0; }
     100% { opacity: 0; }
+}
+
+@keyframes colorChange {
+    0% { color: $text-white }
+    50% { color: $main-color }
+    100% { color: $text-white }
+}
+
+@keyframes colorChangeWhite {
+    0% { color: $dark-mode-color }
+    50% { color: $main-color }
+    100% { color: $dark-mode-color }
 }
 
 
@@ -311,7 +342,7 @@ b, strong {
   &:after {
   	font-family: 'unicons';
   	content: '\ea9f';
-  	font-size: 30px;
+  	font-size: 20px;
   	font-weight: 300;
   	font-style: normal;
   }
@@ -319,7 +350,7 @@ b, strong {
   	&:after {
   		font-family: 'unicons';
   		content: '\eb65';
-  		font-size: 30px;
+  		font-size: 20px;
   		color: $text-white;
   	}
   }
@@ -348,6 +379,9 @@ b, strong {
 	h1, h2, h3, h4, h5, h6,
 	.color-mode {
 		color: $text-white;
+	}
+	.navbar-toggler .navbar-toggler-icon{
+		background: $text-white;
 	}
 	.owl-carousel {
 		.owl-nav button.owl-next,
@@ -395,11 +429,29 @@ b, strong {
 	}
 }
 
+.dark-mode{
+	.timeline-info {
+		&:hover{
+			background: $dark-mode-color;
+		}
+	}
+}
 .timeline-info {
 	display: inline-block;
 	vertical-align: top;
 	max-width: 432px;
 	margin-left: 6em;
+	padding:12px;
+	transition: .3s;
+	border-radius: 20px;
+	&:hover{
+		scale: 1.2;
+		background: $text-white;
+		box-shadow: 1px 5px 15px 10px #ffc20010;
+		z-index: 9999999;
+		position: relative;
+		padding: 16px;
+	}
 	small {
 		color: $button-color;
     	font-size: $link-font-size;
@@ -517,7 +569,7 @@ b, strong {
 
 .contact-info {
 	background: $button-color;
-	border-radius: 0 0 3px 3px;
+	border-radius: 20px;
 	position: relative;
 	bottom: 8px;
 	p, a {
@@ -528,13 +580,23 @@ b, strong {
 
 // SOCIAL LINKS
 .social-links {
-	.uil {
-		color: #f7f3f3;
-		font-size: 20px;
+	display: flex;
+	justify-content: center;
+	i {
+		color: $dark-mode-color;
+		font-size: 40px;
 		display: block;
-		margin: 5px 0;
+		margin: 5px 20px 5px 0;
 		&:hover {
 			color: $main-color;
+		}
+	}
+}
+// SOCIAL LINKS
+.dark-mode{
+	.social-links {
+		i {
+			color: $text-white;
 		}
 	}
 }
@@ -590,9 +652,7 @@ b, strong {
 	}
 
 	.navbar-collapse {
-		background: $text-white;
 		text-align: center;
-		padding-bottom: 20px;
 	}
 
 	.navbar-expand-sm .navbar-nav .nav-link {
@@ -654,5 +714,10 @@ b, strong {
 			display: inline-block;
 			vertical-align: top;
 		}
+	}
+	.navbar-nav{
+		background: $button-color;
+		border-bottom-right-radius: 20px;
+		border-bottom-left-radius: 20px;
 	}
 }
