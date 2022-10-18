@@ -17,7 +17,7 @@ $h3-font-color: #484848;
 $body-font-color: #5b5b5b;
 $text-white: #ffffff;
 $dark-mode-color: #0c0c0d;
-$main-color: #ffc200;
+$main-color: #dc3545;
 $border-color: #f2f2f1;
 $button-color: #474559;
 
@@ -582,7 +582,7 @@ b, strong {
 .social-links {
 	display: flex;
 	justify-content: center;
-	i {
+	a {
 		color: $dark-mode-color;
 		font-size: 40px;
 		display: block;
@@ -595,7 +595,7 @@ b, strong {
 // SOCIAL LINKS
 .dark-mode{
 	.social-links {
-		i {
+		a {
 			color: $text-white;
 		}
 	}
