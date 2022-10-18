@@ -447,7 +447,7 @@ b, strong {
 	&:hover{
 		scale: 1.2;
 		background: $text-white;
-		box-shadow: 1px 5px 15px 10px #ffc20010;
+		box-shadow: 1px 5px 15px 10px #{$main-color}10;
 		z-index: 9999999;
 		position: relative;
 		padding: 16px;

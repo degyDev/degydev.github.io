@@ -403,7 +403,7 @@ b, strong {
 .timeline-info:hover {
   scale: 1.2;
   background: #ffffff;
-  box-shadow: 1px 5px 15px 10px rgba(255, 194, 0, 0.062745098);
+  box-shadow: 1px 5px 15px 10px #dc354510;
   z-index: 9999999;
   position: relative;
   padding: 16px;
