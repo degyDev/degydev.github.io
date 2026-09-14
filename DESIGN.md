@@ -42,12 +42,35 @@ with (`Fraunces Variable`, `Space Mono` regular) are `<link rel=preload>`d
 in `<head>` to keep the largest-contentful-paint heading off a second
 render pass.
 
-## Tokens
+## Palette
 
-- Dark (default): paper-on-near-black — `--bg:#101311`, `--text:#f0f0e8`,
-  `--accent:#d9efa3` (the only saturated color in the system).
-  Light (opt-in toggle): `--bg:#f1f1e8`, `--text:#1b2319`,
-  `--accent:#425b22`.
+Directed reference: leoparpeix.com's paper/off-white ground, forest-green
+ink and sparing warm highlight (15 September 2026). Adapted, not copied —
+our terracotta accent replaces their signature yellow specifically to avoid
+reproducing another designer's brand color, and none of their layout,
+illustration, type or copy carries over; only the "warm paper + forest ink
++ one sparing warm accent" color relationship does.
+
+A sunlit, paper-and-forest palette, not a saturated "brand" gradient:
+warm stone, off-white, a deep forest-green ink, and a terracotta accent
+used sparingly rather than everywhere. This is closer to a printed
+editorial page than a typical dark developer-portfolio theme.
+
+- **Paper (default)** — `--bg:#f1f0e9`, `--surface:#e7e2d3` (stone, for
+  cards and section bands), `--text:#17352a` (forest ink), `--muted:#53675b`,
+  `--accent:#8f5432` (terracotta, tuned to hold 4.5:1 on both paper and
+  stone so it's safe as body-sized text, not just large display type),
+  `--accent-bright:#c1793f` (a lighter, more saturated terracotta reserved
+  for large emphasis — the `em` word in a headline, an active diagram
+  highlight — where only 3:1 is required).
+- **Night (toggle)** — the same family inverted into a deep forest surface:
+  `--bg:#122820`, `--surface:#17392f`, `--text:#f1f0e9`,
+  `--accent:#e0916a`. The toggle defaults to Paper; Night is an explicit
+  opt-in (`data-theme="dark"`), not the system default.
+- A couple of components sit on `--surface` (stone) rather than `--bg`
+  (paper), which is slightly darker — those redefine `--subtle` locally to
+  `--subtle-strong` so small mono labels keep AA contrast on the darker
+  ground (see the `--subtle-strong` comment in `css/base.css`).
 - Desktop gutters scale with viewport (`clamp(22px, 5.5vw, 88px)`); mobile
   gutter floors at 22px.
 - Corners square throughout. No card chrome around ordinary text — text

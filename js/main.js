@@ -49,25 +49,27 @@ document.addEventListener("visibilitychange", () =>
 document.querySelector("#year").textContent = new Date().getFullYear();
 
 const themeButton = document.querySelector(".theme-toggle");
-function applyTheme(light) {
-  document.documentElement.dataset.theme = light ? "light" : "dark";
-  themeButton.setAttribute("aria-pressed", String(light));
-  themeButton.innerHTML = `${light ? "Dark" : "Light"} mode <span aria-hidden="true">◐</span>`;
-  document.querySelector('meta[name="theme-color"]').content = light
-    ? "#f1f1e8"
-    : "#101311";
+// Paper is the default (no attribute needed); the toggle opts into the
+// deep-forest night variant.
+function applyTheme(dark) {
+  document.documentElement.dataset.theme = dark ? "dark" : "light";
+  themeButton.setAttribute("aria-pressed", String(dark));
+  themeButton.innerHTML = `${dark ? "Paper" : "Night"} mode <span aria-hidden="true">◐</span>`;
+  document.querySelector('meta[name="theme-color"]').content = dark
+    ? "#122820"
+    : "#f1f0e9";
 }
 try {
-  applyTheme(localStorage.getItem("degydev-theme") === "light");
+  applyTheme(localStorage.getItem("degydev-theme") === "dark");
 } catch {
   /* Storage is optional. */
 }
 themeButton.hidden = false;
 themeButton.addEventListener("click", () => {
-  const light = document.documentElement.dataset.theme !== "light";
-  applyTheme(light);
+  const dark = document.documentElement.dataset.theme !== "dark";
+  applyTheme(dark);
   try {
-    localStorage.setItem("degydev-theme", light ? "light" : "dark");
+    localStorage.setItem("degydev-theme", dark ? "dark" : "light");
   } catch {
     /* Private mode remains usable. */
   }

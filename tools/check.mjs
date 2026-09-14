@@ -116,7 +116,7 @@ try {
       .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
       .analyze();
     report.accessibility.push({
-      view: `${width}px-dark`,
+      view: `${width}px-paper`,
       violations: audit.violations.map((v) => ({
         id: v.id,
         nodes: v.nodes.map((n) => ({
@@ -150,15 +150,15 @@ try {
   }
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.locator(".theme-toggle").click();
-  assert.equal(await page.locator("html").getAttribute("data-theme"), "light");
+  assert.equal(await page.locator("html").getAttribute("data-theme"), "dark");
   await page.reload();
-  assert.equal(await page.locator("html").getAttribute("data-theme"), "light");
-  const lightAudit = await new AxeBuilder({ page })
+  assert.equal(await page.locator("html").getAttribute("data-theme"), "dark");
+  const nightAudit = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
     .analyze();
   report.accessibility.push({
-    view: "light",
-    violations: lightAudit.violations.map((v) => ({
+    view: "night",
+    violations: nightAudit.violations.map((v) => ({
       id: v.id,
       nodes: v.nodes.map((n) => ({
         target: n.target,
@@ -167,7 +167,7 @@ try {
     })),
   });
   await page.evaluate(() => scrollTo(0, 0));
-  await page.screenshot({ path: ".preview/light-hero.png" });
+  await page.screenshot({ path: ".preview/night-hero.png" });
   assert.equal(
     await page
       .locator(".system-model")

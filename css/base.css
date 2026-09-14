@@ -26,34 +26,44 @@
   font-display: swap;
 }
 :root {
-  color-scheme: dark;
-  --bg: #101311;
-  --surface: #171b17;
-  --surface-raised: #1e251e;
-  --text: #f0f0e8;
-  --muted: #a1a89c;
-  --subtle: #858d80;
-  --line: #343b31;
-  --accent: #d9efa3;
-  --accent-ink: #182013;
-  --warm: #dba58a;
+  /* A sunlit, paper-and-forest palette — warm stone, off-white and a deep
+     green ink, with a terracotta accent used sparingly rather than a
+     saturated brand color. This is the site's default; the toggle below
+     switches to a deep-forest night variant of the same family. */
+  color-scheme: light;
+  --bg: #f1f0e9;
+  --surface: #e7e2d3;
+  --surface-raised: #ded7c2;
+  --text: #17352a;
+  --muted: #53675b;
+  --subtle: #5f6f61;
+  --line: #d9d2bf;
+  --accent: #8f5432;
+  --accent-bright: #c1793f;
+  --accent-ink: #f6f1e6;
+  /* A handful of components sit on --surface (stone) rather than --bg
+     (paper); stone is a touch darker, so small mono labels there need a
+     stronger tone than --subtle to hold AA contrast. */
+  --subtle-strong: #4c5a4d;
   --gutter: clamp(22px, 5.5vw, 88px);
   --font: Arial, Helvetica, sans-serif;
   --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
   --mono: "Space Mono", "Courier New", monospace;
 }
-:root[data-theme="light"] {
-  color-scheme: light;
-  --bg: #f1f1e8;
-  --surface: #e8eade;
-  --surface-raised: #dfe3d3;
-  --text: #1b2319;
-  --muted: #505b4b;
-  --subtle: #596451;
-  --line: #b6beaa;
-  --accent: #425b22;
-  --accent-ink: #f2f5e9;
-  --warm: #865034;
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #122820;
+  --surface: #17392f;
+  --surface-raised: #1d4438;
+  --text: #f1f0e9;
+  --muted: #b7c2b4;
+  --subtle: #8fa08c;
+  --line: #2c4a3d;
+  --accent: #e0916a;
+  --accent-bright: #f0a578;
+  --accent-ink: #122820;
+  --subtle: #9aae96;
+  --subtle-strong: #9aae96;
 }
 * {
   box-sizing: border-box;

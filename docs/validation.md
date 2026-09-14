@@ -1,11 +1,18 @@
 # Validation — 14–15 September 2026
 
-Updated 15 September: added two self-hosted fonts (Fraunces Variable for
-headings, Space Mono for schematic labels) in place of the system-font
-stack, removed the unused Three.js/"atelier" concept files and pre-redesign
-template assets (jQuery, Bootstrap, Owl Carousel, Unicons — none were
-referenced by the shipped page), and reran the checks below against the
-current build.
+Updated 15 September (typography pass): added two self-hosted fonts
+(Fraunces Variable for headings, Space Mono for schematic labels) in place
+of the system-font stack, removed the unused Three.js/"atelier" concept
+files and pre-redesign template assets (jQuery, Bootstrap, Owl Carousel,
+Unicons — none were referenced by the shipped page).
+
+Updated again 15 September (palette pass): replaced the dark-near-black
+default with a paper/forest-green/terracotta palette (a light theme is now
+the default; the toggle opts into a deep-forest night variant), per
+request, directed toward leoparpeix.com's paper-and-forest-ink direction —
+see DESIGN.md. Reran the checks below against the current build after each
+pass; the accessibility and Lighthouse numbers below are from the palette
+pass.
 
 The redesign was served locally over HTTP and tested with installed Google Chrome through Playwright. No deployment or live-site change was performed.
 
@@ -18,7 +25,7 @@ The redesign was served locally over HTTP and tested with installed Google Chrom
 - Architecture layers update their selected state and contextual description.
 - Career links open the corresponding role; native summaries support keyboard activation.
 - Mobile menu opens, closes with Escape, and closes after anchor navigation.
-- Light/dark preference persists after reload.
+- Paper/Night theme preference persists after reload.
 - Reduced motion removes model transforms and animated transitions.
 - JavaScript disabled: content, navigation, native career disclosures, all skill descriptions and contact remain available; inactive enhanced controls are hidden.
 - Visual review: desktop hero, project case studies and expertise; full mobile page and mobile welfare diagram.
@@ -27,7 +34,7 @@ The redesign was served locally over HTTP and tested with installed Google Chrom
 
 The automated axe WCAG 2 A/AA and WCAG 2.1 AA checks reported zero violations in the tested desktop/mobile views, both color modes and all three project dialogs. Dialog entrance animations were allowed to finish before contrast measurement. Keyboard behavior was also tested separately. Automated checks do not replace a complete assistive-technology audit.
 
-## Lighthouse mobile run (15 September, after adding self-hosted fonts)
+## Lighthouse mobile run (15 September, after the palette pass)
 
 | Category       | Local score |
 | -------------- | ----------- |
@@ -36,15 +43,15 @@ The automated axe WCAG 2 A/AA and WCAG 2.1 AA checks reported zero violations in
 | Best practices | 100         |
 | SEO            | 100         |
 
-- First contentful paint: 1.5 s
-- Largest contentful paint: 2.0 s
+- First contentful paint: 1.4 s
+- Largest contentful paint: 2.1 s
 - Total blocking time: 0 ms
 - Cumulative layout shift: 0
-- Total page transfer: Total size was 176 KiB (up from 92 KiB pre-fonts; the two self-hosted woff2 files account for the difference and are preloaded so the hero heading is not blocked on font discovery)
+- Total page transfer: Total size was 177 KiB (up from 92 KiB pre-fonts; the two self-hosted woff2 files account for the difference and are preloaded so the hero heading is not blocked on font discovery)
 
 These are one local Lighthouse run under its simulated mobile conditions, not a guarantee of production scores. The report is saved in ignored .preview/lighthouse-mobile.report.report.html and .json. Public hosting compression, cache headers, network conditions and real devices can change the results.
 
-`node tools/check.mjs` (Playwright + axe) was also rerun on the current build: zero overflow at 1440/1024/768/390/320px, zero console errors, zero broken anchors, zero axe violations across five dark-mode breakpoints, light mode and all three case-study dialogs, and the JS-disabled fallback still exposes content, roles, skills and email.
+`node tools/check.mjs` (Playwright + axe) was also rerun on the current build: zero overflow at 1440/1024/768/390/320px, zero console errors, zero broken anchors, zero axe violations across five breakpoints of the Paper (default) theme, the Night (toggle) theme and all three case-study dialogs, and the JS-disabled fallback still exposes content, roles, skills and email. The palette pass initially introduced one real regression the axe run caught: --subtle text failed AA on the slightly-darker --surface (stone) background inside three components; fixed with a --subtle-strong token scoped to those containers (see css/base.css). Rerunning confirmed zero violations.
 
 ## Production characteristics
 

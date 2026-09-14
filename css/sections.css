@@ -134,36 +134,36 @@ h1 {
 }
 .slab-side {
   fill: var(--surface);
-  stroke: #637153;
+  stroke: var(--muted);
   stroke-width: 1;
 }
 .slab-top {
   fill: var(--surface-raised);
   fill-opacity: 0.94;
-  stroke: #84986c;
+  stroke: var(--text);
   stroke-width: 1;
 }
 .circuit {
   fill: none;
-  stroke: #6e805d;
+  stroke: var(--muted);
   stroke-width: 0.7;
   opacity: 0.65;
 }
 .chip {
-  fill: var(--surface);
-  stroke: #90a778;
+  fill: var(--accent-ink);
+  stroke: var(--text);
   stroke-width: 1;
 }
 .chip-top {
-  fill: #33432a;
+  fill: #cf9f6e;
 }
 .chip-glyph {
   fill: none;
-  stroke: var(--accent);
+  stroke: var(--text);
   stroke-width: 2;
 }
 .model-layer text {
-  fill: #b6c4a3;
+  fill: var(--text);
   font: 9px var(--mono);
   letter-spacing: 1.3px;
 }
@@ -175,7 +175,7 @@ h1 {
   stroke-width: 1.7;
 }
 .model-layer.is-active .chip-top {
-  fill: #455b32;
+  fill: var(--accent-bright);
 }
 .model-annotations {
   fill: var(--muted);
@@ -184,7 +184,7 @@ h1 {
 }
 .model-annotations path {
   fill: none;
-  stroke: var(--line);
+  stroke: var(--muted);
 }
 .architecture figcaption {
   padding-inline: 20px;
@@ -267,6 +267,10 @@ h1 {
   border-block: 1px solid var(--line);
   padding-block: 27px;
   background: var(--surface);
+  /* --subtle is tuned against the page background; the stone surface here
+     is a touch darker, so redefine it locally to keep small mono labels
+     at AA contrast. */
+  --subtle: var(--subtle-strong);
 }
 .domain-strip > .mono {
   font-size: 9px;
@@ -334,6 +338,7 @@ h1 {
 }
 .case-visual {
   background: var(--surface);
+  --subtle: var(--subtle-strong);
   padding: 28px;
   display: flex;
   flex-direction: column;
@@ -409,7 +414,7 @@ h1 {
 }
 .flow-featured .flow-number {
   background: transparent;
-  border-color: #536b3855;
+  border-color: color-mix(in srgb, var(--accent-ink) 35%, transparent);
 }
 .flow-featured .mono,
 .flow-featured > span:last-child {
@@ -566,6 +571,7 @@ h1 {
 .experience {
   background: var(--surface);
   border-block: 1px solid var(--line);
+  --subtle: var(--subtle-strong);
 }
 .career-track {
   display: grid;
