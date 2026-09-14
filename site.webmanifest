@@ -1,0 +1,16 @@
+{
+  "name": "Munkhdelger Tumenbayar — degydev",
+  "short_name": "degydev",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#101311",
+  "theme_color": "#101311",
+  "icons": [
+    {
+      "src": "images/mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

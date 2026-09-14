@@ -1,0 +1,113 @@
+/* Motion describes connections. Native scrolling is never intercepted. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal.is-pending {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  .reveal {
+    transition:
+      opacity 0.8s ease,
+      transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .button,
+  .text-link,
+  .contact-links a,
+  .system-options button {
+    transition:
+      background 0.2s,
+      color 0.2s,
+      border-color 0.2s,
+      transform 0.2s;
+  }
+  .button span,
+  .text-link span,
+  .contact-links a span {
+    transition: transform 0.25s;
+  }
+  .button:hover span {
+    transform: translate(3px, 3px);
+  }
+  .text-link:hover span,
+  .contact-links a:hover span {
+    transform: translate(3px, -3px);
+  }
+  .architecture.is-visible .signal {
+    animation: signal-flow 5s linear infinite;
+  }
+  .architecture:not(.is-visible) .signal {
+    animation-play-state: paused;
+  }
+  .architecture.is-visible .port {
+    animation: port-pulse 4s ease-in-out infinite;
+  }
+  .architecture.is-visible [data-layer="backend"] .port {
+    animation-delay: -1.4s;
+  }
+  .architecture.is-visible [data-layer="data"] .port {
+    animation-delay: -2.8s;
+  }
+  .case-study .flow-featured {
+    transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .case-study:hover .flow-featured {
+    transform: translateX(5px);
+  }
+  .case-study:hover .public-symbol {
+    transform: translate(3px, -3px);
+  }
+  .public-symbol {
+    transition: transform 0.4s;
+  }
+  .skill-panel.panel-enter {
+    animation: panel-in 0.35s ease both;
+  }
+  dialog[open] {
+    animation: panel-in 0.25s ease both;
+  }
+  .page-paused * {
+    animation-play-state: paused !important;
+  }
+  @keyframes signal-flow {
+    to {
+      stroke-dashoffset: -624;
+    }
+  }
+  @keyframes port-pulse {
+    0%,
+    100% {
+      opacity: 0.45;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  @keyframes panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .reveal.is-pending {
+    opacity: 1;
+    transform: none;
+  }
+  .system-model,
+  .model-layer {
+    transform: none !important;
+  }
+}

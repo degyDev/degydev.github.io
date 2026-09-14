@@ -1,0 +1,4 @@
+.firecrawl/
+.preview/
+node_modules/
+.idea/

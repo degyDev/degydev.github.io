@@ -1,0 +1,19 @@
+{
+  "name": "degydev-portfolio",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node tools/serve.mjs",
+    "test": "node tools/check.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.11.0",
+    "@fontsource-variable/fraunces": "5.3.0",
+    "@fontsource/space-mono": "5.3.0",
+    "esbuild": "0.28.2",
+    "lighthouse": "13.4.1",
+    "playwright": "1.58.2",
+    "prettier": "3.8.1"
+  }
+}
