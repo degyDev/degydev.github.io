@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f1f0e9" />
+    <meta name="theme-color" content="#000000" />
     <title>Munkhdelger Tumenbayar — Senior Full-Stack Engineer</title>
     <meta
       name="description"
@@ -13,7 +13,7 @@
     <meta property="og:type" content="website" />
     <meta
       property="og:title"
-      content="Munkhdelger Tumenbayar — Systems that people depend on."
+      content="Munkhdelger Tumenbayar — Complex systems. Clear impact."
     />
     <meta
       property="og:description"
@@ -28,7 +28,7 @@
     <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="Munkhdelger Tumenbayar — I build systems that people depend on."
+      content="Munkhdelger Tumenbayar — Complex systems. Clear impact."
     />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="images/mark.svg" type="image/svg+xml" />
@@ -36,7 +36,7 @@
     <link rel="manifest" href="site.webmanifest" />
     <link
       rel="preload"
-      href="fonts/fraunces-variable.woff2"
+      href="fonts/space-grotesk-variable.woff2"
       as="font"
       type="font/woff2"
       crossorigin
@@ -126,7 +126,7 @@
               <span>/</span> Technical Lead
             </p>
             <h1 id="hero-title">
-              I build systems<br />that people<br /><em>depend on.</em>
+              Complex<br />systems.<br /><em>Clear impact.</em>
             </h1>
             <p class="hero-description">
               Nearly a decade turning complex problems into production software.
@@ -146,7 +146,7 @@
           </div>
           <figure class="architecture" aria-labelledby="architecture-caption">
             <div class="architecture-heading mono">
-              <span>FIG. 01 / SYSTEMS IN MOTION</span
+              <span>FIG. 01 / THE CONNECTED CORE</span
               ><span class="architecture-coordinate" aria-hidden="true"
                 >X 00 / Y 00</span
               >
@@ -159,154 +159,75 @@
                 aria-labelledby="model-title model-description"
               >
                 <title id="model-title">
-                  An interconnected software system
+                  Three connected engineering disciplines
                 </title>
                 <desc id="model-description">
-                  An exploded isometric structure connects frontend and mobile
-                  interfaces through APIs and security to backend services,
-                  messaging, databases and infrastructure. Select a layer below
-                  to explore.
+                  An orbital sculpture connects interface, logic and foundation
+                  around a shared core. Select a discipline below to explore its
+                  role.
                 </desc>
-                <defs>
-                  <pattern
-                    id="grid"
-                    width="36"
-                    height="21"
-                    patternUnits="userSpaceOnUse"
-                    patternTransform="matrix(1 .56 -1 .56 300 320)"
-                  >
-                    <path
-                      d="M36 0H0V21"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width=".7"
-                    />
-                  </pattern>
-                </defs>
-                <g class="model-grid">
-                  <ellipse
-                    cx="300"
-                    cy="417"
-                    rx="280"
-                    ry="102"
-                    fill="url(#grid)"
-                  />
-                  <path d="M24 372L300 526L576 372M300 526V488" />
-                </g>
-                <g class="model-spine">
-                  <path d="M116 202V378M300 97V469M484 202V378M300 307V469" />
-                  <path class="signal" d="M116 202V378L300 481L484 378V202" />
-                </g>
+                <circle class="orbit-guide" cx="300" cy="265" r="226" />
+                <path class="orbit-guide" d="M50 265H550M300 20V510" />
                 <g class="model-layer" data-layer="data">
-                  <path
-                    class="slab-side"
-                    d="M100 354L300 242L500 354V368L300 480L100 368Z"
-                  />
-                  <path
-                    class="slab-top"
-                    d="M100 354L300 242L500 354L300 466Z"
-                  />
-                  <path
-                    class="circuit"
-                    d="M142 354L300 442L458 354L300 266ZM210 316L390 418M210 418L390 316"
-                  />
-                  <g class="chip">
-                    <path d="M228 342L300 301L372 342V363L300 404L228 363Z" />
-                    <path
-                      class="chip-top"
-                      d="M228 342L300 301L372 342L300 383Z"
+                  <g transform="rotate(-32 300 265)">
+                    <ellipse
+                      class="orbit-ring"
+                      cx="300"
+                      cy="265"
+                      rx="210"
+                      ry="104"
                     />
-                    <path d="M300 383V404" />
+                    <ellipse
+                      class="orbit-edge"
+                      cx="300"
+                      cy="265"
+                      rx="213"
+                      ry="108"
+                    />
                   </g>
-                  <path
-                    class="chip-glyph"
-                    d="M279 339L300 327L321 339L300 351ZM279 348L300 360L321 348M279 357L300 369L321 357"
-                  />
-                  <text x="157" y="364" transform="rotate(29 157 364)">
-                    SQL / REDIS
-                  </text>
-                  <text x="369" y="406" transform="rotate(-29 369 406)">
-                    INFRA
-                  </text>
-                  <circle class="port" cx="143" cy="354" r="4" />
-                  <circle class="port" cx="456" cy="354" r="4" />
                 </g>
                 <g class="model-layer" data-layer="backend">
-                  <path
-                    class="slab-side"
-                    d="M100 266L300 154L500 266V280L300 392L100 280Z"
-                  />
-                  <path
-                    class="slab-top"
-                    d="M100 266L300 154L500 266L300 378Z"
-                  />
-                  <path
-                    class="circuit"
-                    d="M141 266L300 355L459 266L300 177ZM180 245L300 312L420 245M300 177V214"
-                  />
-                  <g class="chip">
-                    <path d="M224 243L300 200L376 243V267L300 310L224 267Z" />
-                    <path
-                      class="chip-top"
-                      d="M224 243L300 200L376 243L300 286Z"
+                  <g transform="rotate(40 300 265)">
+                    <ellipse
+                      class="orbit-ring"
+                      cx="300"
+                      cy="265"
+                      rx="172"
+                      ry="78"
                     />
-                    <path d="M300 286V310" />
+                    <ellipse
+                      class="orbit-edge"
+                      cx="300"
+                      cy="265"
+                      rx="176"
+                      ry="82"
+                    />
                   </g>
-                  <path
-                    class="chip-glyph"
-                    d="M271 244L286 235M271 244L286 253M329 244L314 235M329 244L314 253M305 232L295 256"
-                  />
-                  <text x="151" y="277" transform="rotate(29 151 277)">
-                    SERVICES
-                  </text>
-                  <text x="366" y="321" transform="rotate(-29 366 321)">
-                    MESSAGING
-                  </text>
-                  <circle class="port" cx="141" cy="266" r="4" />
-                  <circle class="port" cx="459" cy="266" r="4" />
                 </g>
                 <g class="model-layer" data-layer="interface">
-                  <path
-                    class="slab-side"
-                    d="M100 174L300 62L500 174V188L300 300L100 188Z"
-                  />
-                  <path class="slab-top" d="M100 174L300 62L500 174L300 286Z" />
-                  <path
-                    class="circuit"
-                    d="M140 174L300 264L460 174L300 84ZM204 210L300 156L396 210"
-                  />
-                  <g class="chip">
-                    <path d="M204 144L278 103L355 146V166L281 207L204 164Z" />
-                    <path
-                      class="chip-top"
-                      d="M204 144L278 103L355 146L281 187Z"
+                  <g transform="rotate(100 300 265)">
+                    <ellipse
+                      class="orbit-ring"
+                      cx="300"
+                      cy="265"
+                      rx="135"
+                      ry="64"
                     />
-                    <path d="M281 187V207" />
+                    <ellipse
+                      class="orbit-edge"
+                      cx="300"
+                      cy="265"
+                      rx="139"
+                      ry="68"
+                    />
                   </g>
-                  <path
-                    class="chip-glyph"
-                    d="M244 139L278 120L315 141L281 160ZM249 143L285 123M260 155L275 164"
-                  />
-                  <text x="155" y="187" transform="rotate(29 155 187)">
-                    FRONTEND
-                  </text>
-                  <text x="369" y="228" transform="rotate(-29 369 228)">
-                    MOBILE
-                  </text>
-                  <circle class="port" cx="140" cy="174" r="4" />
-                  <circle class="port" cx="460" cy="174" r="4" />
                 </g>
-                <g class="model-annotations">
-                  <path
-                    d="M472 166H532V149H560M484 269H540M481 365H526V383H560"
-                  />
-                  <text x="536" y="138">01</text>
-                  <text x="545" y="273">02</text>
-                  <text x="536" y="403">03</text>
-                  <text x="25" y="292">API</text>
-                  <path d="M53 287H81V230H100" />
-                  <text x="24" y="313">SECURITY</text>
-                </g>
+                <path
+                  class="orbit-core"
+                  d="M300 201L355 236V298L300 330L245 298V236ZM300 201V265M245 236L300 265L355 236M300 265V330"
+                />
+                <circle cx="132" cy="335" r="9" fill="#fca311" />
+                <circle cx="438" cy="177" r="7" fill="#e5e5e5" />
               </svg>
             </div>
             <figcaption id="architecture-caption">
@@ -582,7 +503,7 @@
           <div class="career-roles reveal">
             <details id="role-ashid" open>
               <summary>
-                <span class="role-date mono">FEB 2023 — PRESENT</span
+                <span class="role-date mono">MAR 2023 — PRESENT</span
                 ><span class="role-title"
                   >Senior Full-Stack Engineer<small
                     >Ashid Capital LLC</small
@@ -604,7 +525,7 @@
             </details>
             <details id="role-public">
               <summary>
-                <span class="role-date mono">NOV 2019 — FEB 2023</span
+                <span class="role-date mono">DEC 2019 — MAR 2023</span
                 ><span class="role-title"
                   >Full-Stack Developer<small
                     >Information Technology Center of Customs, Taxation and
@@ -630,7 +551,7 @@
             </details>
             <details id="role-properties">
               <summary>
-                <span class="role-date mono">AUG — OCT 2019</span
+                <span class="role-date mono">SEP 2019 — NOV 2019</span
                 ><span class="role-title"
                   >Full-Stack Developer<small>Mongolian Properties</small></span
                 ><span class="detail-plus" aria-hidden="true">+</span>
@@ -645,7 +566,7 @@
             </details>
             <details id="role-ritus">
               <summary>
-                <span class="role-date mono">MAY 2017 — MAR 2019</span
+                <span class="role-date mono">JUN 2017 — APR 2019</span
                 ><span class="role-title"
                   >Full-Stack Developer<small>Ritus LLC</small></span
                 ><span class="detail-plus" aria-hidden="true">+</span>
@@ -661,7 +582,7 @@
             </details>
             <details id="role-freelance">
               <summary>
-                <span class="role-date mono">FEB 2023 — PRESENT · PARALLEL</span
+                <span class="role-date mono">MAR 2023 — PRESENT · PARALLEL</span
                 ><span class="role-title"
                   >Independent Full-Stack Engineering<small
                     >Freelance / contract</small
@@ -677,6 +598,313 @@
               </div>
             </details>
           </div>
+          <!-- resume:start -->
+          <details class="resume-snapshot">
+            <summary>Explore the full resume · 5 roles / 6 projects</summary>
+            <p class="resume-date">
+              Resume snapshot · 2026-09-15 ·
+              <a
+                href="https://gitconnected.com/degydev/resume"
+                target="_blank"
+                rel="noopener noreferrer"
+                >GitConnected ↗</a
+              >
+              · <a href="data/resume.json" download>Download JSON</a>
+            </p>
+            <h3>
+              Senior Full-Stack Developer | Angular, Spring Boot | Building
+              Scalable Systems
+            </h3>
+            <p>
+              I’m a full-stack web developer with nearly a decade of experience
+              building scalable web applications and backend systems. I
+              specialize in Angular, React, TypeScript, Spring Boot, and
+              Node.js. I’ve worked on national platforms like ehalamj.mn and
+              ebarimt.mn, improving system performance and automation. I focus
+              on clean, maintainable code and delivering practical solutions
+              that solve real business problems.
+            </p>
+            <p>
+              <a
+                href="https://gitconnected.com/degydev"
+                target="_blank"
+                rel="noopener noreferrer"
+                >gitconnected ↗</a
+              >
+              ·
+              <a
+                href="https://github.com/degyDev"
+                target="_blank"
+                rel="noopener noreferrer"
+                >GitHub ↗</a
+              >
+              ·
+              <a
+                href="https://www.linkedin.com/in/degydev/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >LinkedIn ↗</a
+              >
+            </p>
+            <div class="resume-metrics">
+              <span><strong>5</strong> role entries</span
+              ><span><strong>6</strong> projects</span
+              ><span><strong>11</strong> listed skills</span>
+            </div>
+            <h3>Skills</h3>
+            <ul class="resume-skills">
+              <li>HTML · Advanced</li>
+              <li>CSS · Advanced</li>
+              <li>TypeScript · Intermediate</li>
+              <li>Spring Boot · Advanced</li>
+              <li>React · Advanced</li>
+              <li>Java · Intermediate</li>
+              <li>NodeJs · Intermediate</li>
+              <li>AngularJs · Advanced</li>
+              <li>Angular2 · Advanced</li>
+              <li>SQL · Intermediate</li>
+              <li>Javascript · Advanced</li>
+            </ul>
+            <h3>Work history</h3>
+            <article class="resume-record">
+              <h4>Full Stack Developer · Freelance</h4>
+              <p class="resume-date">
+                Mar 2023 — Present · Parallel contract work
+              </p>
+              <p>Mongolia</p>
+              <p>
+                Senior Fullstack Engineer delivering high-quality software
+                solutions on a contract basis. Experienced in developing
+                full-stack applications from architecture to deployment, with a
+                strong focus on performance, security, and maintainability.
+              </p>
+              <ul>
+                <li>
+                  Developed a credit scoring system for a fintech client,
+                  focusing on accuracy and real-time decision-making.
+                </li>
+                <li>
+                  Built and maintained secure solutions for collateral loan
+                  management.
+                </li>
+                <li>
+                  Contributed significantly to the development and stability of
+                  the Simple.mn platform.
+                </li>
+                <li>
+                  Provided clean, scalable code and ensured smooth handoff and
+                  documentation for long-term maintainability.
+                </li>
+                <li>
+                  Worked closely with clients to gather requirements and deliver
+                  tailored, production-ready software.
+                </li>
+              </ul>
+            </article>
+            <article class="resume-record">
+              <h4>Senior FullStack Engineer · Ashid Capital LLC</h4>
+              <p class="resume-date">Mar 2023 — Present</p>
+              <p>Mongolia</p>
+              <p>
+                Experienced Senior Fullstack Engineer skilled in leading teams
+                of 3-7 developers, including front-end and mobile developers.
+                Proficient in building components and designing architecture.
+                Expertise includes: • Backend: Spring Boot, Java • Frontend:
+                React, HTML, CSS, JavaScript • Database: Oracle with APEX Strong
+                leadership experience in guiding development teams and ensuring
+                high-quality deliverables.
+              </p>
+              <ul>
+                <li>Successfully led development of credit scoring systems.</li>
+                <li>
+                  Developed robust and stable code for collateral loan
+                  management.
+                </li>
+                <li>
+                  Played a pivotal role in the creation of the Simple.mn
+                  platform.
+                </li>
+                <li>
+                  Consistently ensured high-quality deliverables through strong
+                  leadership and technical expertise.
+                </li>
+              </ul>
+              <a
+                href="http://simple.mn/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Ashid Capital LLC ↗</a
+              >
+            </article>
+            <article class="resume-record">
+              <h4>
+                FullStack Developer · information technology center of custom,
+                taxation and finance
+              </h4>
+              <p class="resume-date">Dec 2019 — Mar 2023</p>
+              <p>Ulaanbaatar Mongolia</p>
+              <ul>
+                <li>Built Ehalamj.mn on ReactJs, Material ui, Spring Boot</li>
+                <li>Built and developed part of ebarimt.mn</li>
+                <li>
+                  Built 1072 Shares Of &quot;Erdenes Tavan Tolgoi&quot; Mining
+                  corporation&#39;s Web sites and Request Module
+                </li>
+              </ul>
+              <a
+                href="https://itc.gov.mn/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >information technology center of custom, taxation and finance
+                ↗</a
+              >
+            </article>
+            <article class="resume-record">
+              <h4>FullStack Developer · Mongolian Properties</h4>
+              <p class="resume-date">Sep 2019 — Nov 2019</p>
+              <p>Ulaanbaatar, Mongolia</p>
+              <ul>
+                <li>Built Avy.mn Online Assets Shop on Symfony with AWS</li>
+              </ul>
+              <a
+                href="http://www.mongolia-properties.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Mongolian Properties ↗</a
+              >
+            </article>
+            <article class="resume-record">
+              <h4>FullStack Developer · Ritus LLC</h4>
+              <p class="resume-date">Jun 2017 — Apr 2019</p>
+              <p>Ulaanbaatar, Mongolia</p>
+              <ul>
+                <li>Built CRM,HRM Private System on PHP</li>
+                <li>Built DISC Test Personality Detect Quiz Styled System</li>
+                <li>Built Delphi, Chronium Integration</li>
+              </ul>
+              <a
+                href="http://www.ritus.mn/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Ritus LLC ↗</a
+              >
+            </article>
+            <h3>Projects</h3>
+            <article class="resume-record">
+              <h4>ebarimt.mn</h4>
+              <p class="resume-date">Dec 2019 — Mar 2023</p>
+              <p>
+                Automated registration of VAT receipts for citizens&#39;
+                purchases.
+              </p>
+              <p>Developer</p>
+              <p>
+                HTML / CSS / SQL / Javascript / JAVA / Spring Boot / AngularJS /
+                Angular2 / OracleDB / NodeJS / MongoDB
+              </p>
+              <a
+                href="https://ebarimt.mn/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Visit project ↗</a
+              >
+            </article>
+            <article class="resume-record">
+              <h4>1072.Ebarimt</h4>
+              <p class="resume-date">Jan 2020 — Jan 2022</p>
+              <p>
+                Integration of 1072 &quot;Erdenes Tavan Tolgoi&quot; shares with
+                the Ebarimt system.
+              </p>
+              <p>Developer</p>
+              <p>
+                HTML / Javascript / SQL / CSS / Java / React / Oracle / Spring
+                Boot
+              </p>
+              <a
+                href="https://1072.ebarimt.mn/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Visit project ↗</a
+              >
+            </article>
+            <article class="resume-record">
+              <h4>QR.Ebarimt</h4>
+              <p class="resume-date">Jan 2020 — Jan 2023</p>
+              <p>
+                Implementation of QR code-based receipt registration in Ebarimt.
+              </p>
+              <p>Developer</p>
+              <a
+                href="https://qr.ebarimt.mn/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Visit project ↗</a
+              >
+            </article>
+            <article class="resume-record">
+              <h4>Support Aid for Covid Restriction (300k, 50k Request)</h4>
+              <p class="resume-date">Jan 2020 — Jan 2022</p>
+              <p>Management of Covid restriction support aid requests.</p>
+              <p>Developer</p>
+              <a
+                href="https://300.ebarimt.mn/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Visit project ↗</a
+              >
+            </article>
+            <article class="resume-record">
+              <h4>UB Smart Card Integration and Implementation</h4>
+              <p class="resume-date">Jan 2021 — Jan 2022</p>
+              <p>Integration and implementation of UB Smart Card system.</p>
+              <p>Developer</p>
+              <a
+                href="https://ebarimt.mn/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Visit project ↗</a
+              >
+            </article>
+            <article class="resume-record">
+              <h4>ehalamj.mn</h4>
+              <p class="resume-date">Feb 2020 — Mar 2023</p>
+              <p>
+                The system aims to deliver welfare pensions efficiently by using
+                existing government-held citizen information, eliminating the
+                need for paper documents.
+              </p>
+              <p>Developer</p>
+              <p>
+                HTML / CSS / SQL / Javascript / Java / OracleDB / NodeJs / Redis
+                / WebSocket / ReactJS / RabbitMQ / Spring Boot / MongoDB
+              </p>
+              <a
+                href="https://ehalamj.mn/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Visit project ↗</a
+              >
+            </article>
+            <h3>Education</h3>
+            <article class="resume-record">
+              <h4>Master&#39;s Degree · Computer Science</h4>
+              <p>Mongolian University of Science and Technology</p>
+              <p class="resume-date">Sep 2017 — Jun 2022</p>
+            </article>
+            <article class="resume-record">
+              <h4>Bachelor&#39;s Degree · Computer Science</h4>
+              <p>Mongolian University of Science and Technology</p>
+              <p class="resume-date">Sep 2013 — Jun 2017</p>
+              <p>GPA: 3.22</p>
+            </article>
+            <h3>Languages</h3>
+            <ul>
+              <li>English · Novice</li>
+              <li>Mongolian · Fluent</li>
+            </ul>
+          </details>
+          <!-- resume:end -->
           <div class="education">
             <span class="eyebrow">The foundation</span>
             <p>
@@ -945,6 +1173,6 @@
       </div>
       <div class="dialog-content"></div>
     </dialog>
-    <script type="module" src="js/main.js"></script>
+    <script type="module" src="src/main.ts"></script>
   </body>
 </html>

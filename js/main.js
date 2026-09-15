@@ -49,15 +49,14 @@ document.addEventListener("visibilitychange", () =>
 document.querySelector("#year").textContent = new Date().getFullYear();
 
 const themeButton = document.querySelector(".theme-toggle");
-// Paper is the default (no attribute needed); the toggle opts into the
-// deep-forest night variant.
+// Light content and an ink hero form the default Signal theme.
 function applyTheme(dark) {
   document.documentElement.dataset.theme = dark ? "dark" : "light";
   themeButton.setAttribute("aria-pressed", String(dark));
-  themeButton.innerHTML = `${dark ? "Paper" : "Night"} mode <span aria-hidden="true">◐</span>`;
+  themeButton.innerHTML = `${dark ? "Light" : "Dark"} mode <span aria-hidden="true">◐</span>`;
   document.querySelector('meta[name="theme-color"]').content = dark
-    ? "#122820"
-    : "#f1f0e9";
+    ? "#000000"
+    : "#000000";
 }
 try {
   applyTheme(localStorage.getItem("degydev-theme") === "dark");

@@ -1,15 +1,10 @@
-/* Shared tokens and document primitives. Two self-hosted faces carry the
-   personality: a characterful variable serif for headlines (an engineering
-   portfolio doesn't need to look like every other sans-grotesk dev site),
-   and a quirky technical mono for schematic labels. Body copy stays on the
-   system stack for legibility and zero extra weight. */
+/* Signal: self-hosted geometric sans and technical mono. */
 @font-face {
-  font-family: "Fraunces Variable";
-  src: url("../fonts/fraunces-variable.woff2") format("woff2-variations");
+  font-family: "Space Grotesk";
+  src: url("../fonts/space-grotesk-variable.woff2") format("woff2");
   font-weight: 300 700;
   font-style: normal;
   font-display: swap;
-  font-optical-sizing: auto;
 }
 @font-face {
   font-family: "Space Mono";
@@ -26,44 +21,41 @@
   font-display: swap;
 }
 :root {
-  /* A sunlit, paper-and-forest palette — warm stone, off-white and a deep
-     green ink, with a terracotta accent used sparingly rather than a
-     saturated brand color. This is the site's default; the toggle below
-     switches to a deep-forest night variant of the same family. */
   color-scheme: light;
-  --bg: #f1f0e9;
-  --surface: #e7e2d3;
-  --surface-raised: #ded7c2;
-  --text: #17352a;
-  --muted: #53675b;
-  --subtle: #5f6f61;
-  --line: #d9d2bf;
-  --accent: #8f5432;
-  --accent-bright: #c1793f;
-  --accent-ink: #f6f1e6;
-  /* A handful of components sit on --surface (stone) rather than --bg
-     (paper); stone is a touch darker, so small mono labels there need a
-     stronger tone than --subtle to hold AA contrast. */
-  --subtle-strong: #4c5a4d;
+  --black: #000000;
+  --navy: #14213d;
+  --orange: #fca311;
+  --gray: #e5e5e5;
+  --white: #ffffff;
+  --bg: var(--white);
+  --surface: var(--gray);
+  --surface-raised: var(--white);
+  --text: var(--navy);
+  --muted: var(--navy);
+  --subtle: var(--navy);
+  --subtle-strong: var(--navy);
+  --line: color-mix(in srgb, var(--navy) 20%, transparent);
+  --accent: var(--navy);
+  --accent-bright: var(--navy);
+  --accent-ink: var(--white);
   --gutter: clamp(22px, 5.5vw, 88px);
-  --font: Arial, Helvetica, sans-serif;
-  --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
+  --font: "Space Grotesk", Arial, Helvetica, sans-serif;
+  --font-display: "Space Grotesk", Arial, Helvetica, sans-serif;
   --mono: "Space Mono", "Courier New", monospace;
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #122820;
-  --surface: #17392f;
-  --surface-raised: #1d4438;
-  --text: #f1f0e9;
-  --muted: #b7c2b4;
-  --subtle: #8fa08c;
-  --line: #2c4a3d;
-  --accent: #e0916a;
-  --accent-bright: #f0a578;
-  --accent-ink: #122820;
-  --subtle: #9aae96;
-  --subtle-strong: #9aae96;
+  --bg: var(--black);
+  --surface: var(--navy);
+  --surface-raised: var(--black);
+  --text: var(--white);
+  --muted: var(--gray);
+  --subtle: var(--gray);
+  --subtle-strong: var(--gray);
+  --line: color-mix(in srgb, var(--gray) 30%, transparent);
+  --accent: var(--orange);
+  --accent-bright: var(--orange);
+  --accent-ink: var(--black);
 }
 * {
   box-sizing: border-box;
@@ -487,7 +479,7 @@ svg {
     --text: #111;
     --muted: #333;
     --subtle: #555;
-    --accent: #273d19;
+    --accent: #14213d;
     --line: #bbb;
   }
   body {

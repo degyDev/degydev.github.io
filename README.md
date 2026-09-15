@@ -1,41 +1,66 @@
-# degydev — Systems in Motion
+﻿# degydev — Signal
 
-Personal portfolio for Munkhdelger Tumenbayar. Plain HTML, CSS and JavaScript modules. No production dependencies, build step, WebGL or CDN requests. Two display fonts are self-hosted locally (see `fonts/`) rather than pulled from a CDN.
+Munkhdelger Tumenbayar's portfolio. Vite + TypeScript enhance the existing semantic HTML with a Three.js hero and Lenis scrolling. The Signal direction uses a black hero, navy and orange accents, Space Grotesk typography and a metallic orbital sculpture. The original d. logo is restored. The resume, career timeline, skill selector and case-study interactions remain available.
 
-## Preview
+## Start locally
 
-Run `npm run dev`, then open http://127.0.0.1:4173. Node.js 22 or later is used for development tooling. Any static HTTP server can serve the site. ES modules require HTTP rather than opening index.html as a file.
+1. Install Node.js 22.19 or newer in the 22.x line (or a supported newer LTS).
+2. Run `npm ci`.
+3. Run `npm run dev`.
+4. Open http://127.0.0.1:4173.
 
-## Deployment
+## Build and check
 
-The root `index.html` and relative asset paths remain compatible with the existing GitHub Pages repository. Publish the repository root using the repository's configured Pages branch. No framework migration or new deployment service is required. This change does not publish or change GitHub settings.
+```sh
+npm run build
+npm run preview
+```
 
-## Structure
+In another terminal, with the preview running:
 
-- `index.html`: semantic content, inline architecture artwork, metadata and structured data. Core content is readable without JavaScript.
-- `css/base.css`: design tokens, typography, navigation, document and print styles.
-- `css/sections.css`: responsive section layouts and original system diagrams.
-- `css/motion.css`: optional motion and reduced-motion overrides.
-- `js/main.js`: progressive enhancement, entry reveals, theme preference and email copying.
-- `js/architecture.js`: layer selection, pointer perspective and scroll-linked separation; no permanent JavaScript render loop.
-- `js/navigation.js`: native-anchor navigation, mobile menu and reading progress.
-- `js/skills.js`: linked discipline buttons and contextual skill panels.
-- `js/case-studies.js` / `js/case-data.js`: keyboard-accessible native dialogs and dynamically imported project notes.
-- `images/mark.svg`, `images/social.png`, `images/apple-touch-icon.png`: original identity and sharing assets.
-- `fonts/`: self-hosted Fraunces Variable (headings) and Space Mono (schematic labels), both OFL-licensed; see `DESIGN.md`.
-- `docs/content-sources.md`: factual provenance and editorial decisions.
-- `docs/validation.md`: cross-viewport, accessibility and performance results this design was checked against.
+```sh
+npm run test:resume
+npm test
+npm run test:3d
+```
 
-The pre-redesign template (jQuery, Bootstrap, Owl Carousel, Unicons, Sass source, stock illustrations) has been removed — none of it was requested by the shipped page.
+The build runs TypeScript checking and creates `dist/`. Use Vite for development; opening the source HTML directly or using the old plain-file server does not compile TypeScript. Chrome must be installed for browser checks. Reports and screenshots are saved to ignored `.preview/`.
 
-## Checks
+## Refresh profile content
 
-Install development tools with `npm ci`. Start the preview server in another shell, then run `npm test`. Tests use installed Google Chrome through Playwright. They cover mobile and desktop overflow, asset errors, dialogs and restored focus, keyboard controls, discipline selection, persistent theme, reduced motion, no-JavaScript fallback, and axe WCAG A/AA checks. Screenshots and reports go to ignored `.preview/`.
+```sh
+npm run sync:resume
+npm run build
+```
 
-Run `node tools/artifacts.mjs` to regenerate the social image and touch icon from the original vector artwork. Run `npx prettier --write index.html css/base.css css/sections.css css/motion.css js/main.js js/navigation.js js/architecture.js js/skills.js js/case-studies.js js/case-data.js tools/*.mjs` to format the maintained source.
+This fetches the public [GitConnected JSON resume](https://gitconnected.com/api/v1/resume/degydev), validates it, writes `data/resume.json`, generates the full resume disclosure in `index.html`, and updates the editorial career cards' dates. The case-study dates read from the same snapshot. Review the diff before publishing. Network/schema failure retains the previous snapshot.
 
-Lighthouse reports measure a local static-server run; hosting, network and browser conditions affect live scores. There is no runtime dependency on the test tools.
+Builds use the checked-in snapshot and need no API key or network request. Counts are actual resume entries, not business-outcome metrics. Profile name, biography, links, work, projects and technology lists, skills, education and languages are retained. LinkedIn's malformed API link is corrected using the supplied profile URL. An invalid experience counter is excluded.
 
-## Content updates
+## Architecture
 
-Edit visible summaries in index.html and the corresponding deeper notes in js/case-data.js. Keep role dates aligned with the public CV. Conceptual project diagrams intentionally do not claim to expose internal architecture. Do not add inferred business metrics, private implementation details, or unverified project ownership.
+```text
+index.html                 Semantic layout, SVG fallback, generated full resume
+src/main.ts                Existing UI + progressive scene loading
+src/scene.ts               Three.js model, lighting, camera, adaptive DPR, disposal
+src/motion.ts              Lenis lifecycle and project-visual tilt
+src/styles.css             Canvas and resume styles
+src/signal.css             Signal visual direction and responsive layouts
+js/                        Existing navigation, skills and case-study modules
+css/                       Existing design tokens and section styles
+data/resume.json            Validated public resume snapshot
+tools/resume.mjs            Normalize, sanitize and render resume records
+tools/sync-resume.mjs       Explicit public API refresh
+tools/check-3d.mjs          WebGL, fallback and device-emulation checks
+vite.config.ts             Production build and static-asset copying
+```
+
+See [the foundation guide](docs/3d-foundation.md) for component boundaries, setup, deployment preparation and next steps. See [current validation](docs/3d-validation.md) for measured results and limitations.
+
+## Production hosting
+
+Publish the **contents of `dist/`** using the existing GitHub Pages repository. A build artifact is now required; publishing the source repository root will not run the TypeScript enhancements. The manifest and canonical URLs target `https://degydev.github.io/`. No hosting settings or deployment were changed during this work.
+
+## Content and design
+
+The editorial case studies remain curated; a refresh does not overwrite their narrative. Keep claims grounded in the public resume and never invent client metrics or internal architecture. See [content provenance](docs/content-sources.md) and [design direction](DESIGN.md). The complete raw API response used for research remains ignored under `.firecrawl/`; the published JSON contains only normalized portfolio fields.

@@ -1,3 +1,17 @@
+import resume from "../data/resume.json" with { type: "json" };
+const month = (value) =>
+  value
+    ? new Intl.DateTimeFormat("en", {
+        month: "long",
+        year: "numeric",
+        timeZone: "UTC",
+      }).format(new Date(value))
+    : "present";
+const period = (entry) =>
+  entry
+    ? month(entry.startDate) + "–" + month(entry.endDate)
+    : "See full resume";
+
 // Factual contributions: GitConnected CV, retrieved 2026-09-14.
 // Domain diagrams explain relationships, not proprietary implementation details.
 const cv = {
@@ -6,7 +20,7 @@ const cv = {
 };
 export const cases = {
   fintech: {
-    label: "Ashid Capital / February 2023–present",
+    label: `Ashid Capital / ${period(resume.work.find((w) => w.name === "Ashid Capital LLC"))}`,
     title: "Financial systems. Human decisions.",
     intro:
       "Senior full-stack engineering across credit scoring, collateral-loan management and the Simple.mn platform. The work combines application development with architecture and technical leadership.",
@@ -43,7 +57,7 @@ export const cases = {
     sources: [cv, { label: "Simple.mn", url: "https://simple.mn/" }],
   },
   welfare: {
-    label: "Public services / January 2020–February 2023",
+    label: `Public services / ${period(resume.projects.find((p) => p.name === "ehalamj.mn"))}`,
     title: "A better connection to welfare services.",
     intro:
       "ehalamj.mn aims to deliver welfare and pension services using citizen information already held by government, reducing the need for paper documents.",
@@ -74,7 +88,7 @@ export const cases = {
     sources: [cv, { label: "ehalamj.mn", url: "https://ehalamj.mn/" }],
   },
   integrations: {
-    label: "Public infrastructure / November 2019–February 2023",
+    label: `Public infrastructure / ${period(resume.projects.find((p) => p.name === "ebarimt.mn"))}`,
     title: "One ecosystem. Many connections.",
     intro:
       "Contributed to parts of Mongolia’s eBarimt ecosystem, connecting receipt registration with several other public-service workflows.",

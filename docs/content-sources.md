@@ -1,3 +1,9 @@
+# Current source precedence — 3D foundation
+
+On 15 September 2026 the public JSON endpoint at https://gitconnected.com/api/v1/resume/degydev was retrieved directly. The normalized snapshot is checked in as data/resume.json. The foundation uses its literal ISO dates; several are one month later than the rendered-CV dates in the historical notes below. Current roles: Ritus June 2017–April 2019; Mongolian Properties September–November 2019; public IT center December 2019–March 2023; Ashid Capital and parallel freelance March 2023–present. Case-study dates now use the same snapshot.
+
+The JSON also provides project library lists absent from the prior scrape; these are included in the full resume. The invalid yearsOfExperience value (8001) and internal account identifiers are excluded. See docs/3d-foundation.md for normalization and freshness rules. The following records describe the earlier SVG-only version and its sources.
+
 # Content provenance
 
 Reviewed 14 September 2026. The supplied brief also acts as a first-party career source.

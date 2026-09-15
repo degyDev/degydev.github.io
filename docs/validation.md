@@ -1,3 +1,5 @@
+> Historical SVG-only validation. For the current Three.js build, see [3d-validation.md](3d-validation.md). The Lighthouse scores below have not been rerun for the 3D foundation.
+
 # Validation — 14–15 September 2026
 
 Updated 15 September (typography pass): added two self-hosted fonts
