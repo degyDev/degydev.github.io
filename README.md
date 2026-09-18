@@ -59,7 +59,11 @@ See [the foundation guide](docs/3d-foundation.md) for component boundaries, setu
 
 ## Production hosting
 
-Publish the **contents of `dist/`** using the existing GitHub Pages repository. A build artifact is now required; publishing the source repository root will not run the TypeScript enhancements. The manifest and canonical URLs target `https://degydev.github.io/`. No hosting settings or deployment were changed during this work.
+The [Pages workflow](.github/workflows/deploy.yml) installs dependencies, runs the TypeScript/Vite build, and publishes **`dist/`** on pushes to `main`. It can also be run manually from the Actions tab.
+
+One-time setup: in the repository's **Settings → Pages → Build and deployment → Source**, select **GitHub Actions**. Commit and push the workflow to `main`, then check the **Deploy site to GitHub Pages** run in Actions.
+
+Do not use **Deploy from a branch** with the source repository root: `index.html` references `src/main.ts`, which browsers cannot execute directly. The default Pages pipeline does not run Vite; `.nojekyll` does not compile TypeScript either. The workflow compiles and bundles the JavaScript and CSS before publishing. The manifest and canonical URLs target `https://degydev.github.io/`.
 
 ## Content and design
 
