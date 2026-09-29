@@ -95,6 +95,17 @@
         letter-spacing: 0.08em;
         text-transform: uppercase;
       }
+      .hint-key {
+        display: inline-block;
+        color: var(--ink);
+        transition:
+          transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+          color 0.35s ease;
+      }
+      .hint-key.is-pulsing {
+        color: var(--accent);
+        transform: scale(1.6);
+      }
       .keyboard-key-label {
         position: fixed;
         overflow: hidden;
@@ -497,6 +508,51 @@
           gap: 32px;
         }
       }
+      .site-header {
+        position: fixed;
+        inset: 0 0 auto 0;
+        z-index: 70;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px 24px;
+        padding: 12px 20px;
+        background: #0d0c0ad9;
+        backdrop-filter: blur(6px);
+        border-bottom: 1px solid #f3ede026;
+      }
+      .site-header .site-logo {
+        font: 12px var(--font-mono);
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink);
+        text-decoration: none;
+        flex-shrink: 0;
+      }
+      .site-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px 16px;
+        justify-content: flex-end;
+      }
+      .site-nav a {
+        font: 10px var(--font-mono);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .site-nav a:hover,
+      .site-nav a.is-current {
+        color: var(--accent);
+      }
+      @media (max-width: 700px) {
+        .site-nav {
+          gap: 4px 10px;
+        }
+      }
       #status {
         position: fixed;
         bottom: 8px;
@@ -508,6 +564,21 @@
     </style>
   </head>
   <body>
+    <header class="site-header">
+      <a href="#" class="site-logo">degydev</a>
+      <nav class="site-nav" aria-label="Portfolio sections">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#work">Work</a>
+        <a href="#current">Now</a>
+        <a href="#education">Education</a>
+        <a href="#archive">Archive</a>
+        <a href="#contact">Contact</a>
+        <a href="#resume">CV</a>
+        <a href="#links">Links</a>
+      </nav>
+    </header>
     <div id="status">loading…</div>
 
     <div class="keyboard-hero-spacer" id="hero-spacer">
@@ -915,6 +986,7 @@
       const canvasWrap = document.getElementById("canvas-wrap");
       const heroCopy = document.getElementById("hero-copy");
       const isDesktop = matchMedia("(min-width: 861px)").matches;
+      const motionReduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
       const tokens = {
         ink: "#0d0c0a",
@@ -925,13 +997,34 @@
         accentBright: "#ff4a1c",
       };
 
+      const siteNavLinks = [...document.querySelectorAll(".site-nav a")];
       const nav = initKeyboardNav({
         canvas,
         labelHost: document.body,
         tokens,
-        onNavigate: (hash) => (status.textContent = "at #" + hash),
+        onNavigate: (hash) => {
+          status.textContent = hash ? "at #" + hash : "at top";
+          for (const link of siteNavLinks) {
+            link.classList.toggle(
+              "is-current",
+              link.getAttribute("href") === `#${hash}`,
+            );
+          }
+        },
       });
       nav.ensureScene().then(() => (status.textContent = "scene ready"));
+
+      for (const link of siteNavLinks) {
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          nav.navigateTo(link.getAttribute("href").slice(1));
+        });
+      }
+      document.querySelector(".site-logo").addEventListener("click", (event) => {
+        event.preventDefault();
+        history.pushState(null, "", location.pathname);
+        scrollTo({ top: 0, behavior: "smooth" });
+      });
 
       addEventListener("pointermove", (e) => {
         nav.scene?.setPointer(e.clientX / innerWidth - 0.5, e.clientY / innerHeight - 0.5);
@@ -939,28 +1032,59 @@
 
       // Mobile gets a real flow layout (see the max-width: 860px block in
       // CSS) — the keyboard sits in the column and scrolls away normally,
-      // no JS positioning needed. Only desktop needs the pin-to-corner
-      // math, since only desktop has the fixed-position shrink transition.
+      // no JS positioning needed. Only desktop needs the fade-on-scroll
+      // math below, since only desktop has the fixed-position hero.
       const hint = document.getElementById("hero-hint");
-      if (matchMedia("(pointer: coarse)").matches) {
-        hint.textContent = "Tap a key. Hold A S D F G / Z X C V B to navigate.";
+      const HINT_LETTERS = ["A", "S", "D", "F", "G", "/", "Z", "X", "C", "V", "B"];
+      function renderHint(firstSentence) {
+        const keys = HINT_LETTERS.map((letter) =>
+          letter === "/" ? "/" : `<span class="hint-key">${letter}</span>`,
+        ).join(" ");
+        hint.innerHTML = `${firstSentence} Hold ${keys} to navigate.`;
+      }
+      renderHint(
+        matchMedia("(pointer: coarse)").matches
+          ? "Tap a key."
+          : "Type a letter.",
+      );
+      if (!motionReduced) {
+        const keySpans = [...hint.querySelectorAll(".hint-key")];
+        let order = [];
+        let cursor = 0;
+        let pulseTimer = null;
+        function shuffle() {
+          order = keySpans.map((_, i) => i);
+          for (let i = order.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [order[i], order[j]] = [order[j], order[i]];
+          }
+        }
+        function pulseNext() {
+          if (cursor >= order.length) {
+            shuffle();
+            cursor = 0;
+          }
+          const span = keySpans[order[cursor++]];
+          span.classList.add("is-pulsing");
+          setTimeout(() => span.classList.remove("is-pulsing"), 300);
+          pulseTimer = setTimeout(pulseNext, 480);
+        }
+        shuffle();
+        pulseTimer = setTimeout(pulseNext, 480);
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) clearTimeout(pulseTimer);
+          else pulseNext();
+        });
       }
       if (isDesktop) {
-        // Two explicit pixel frames — hero and corner — interpolated
-        // directly. No CSS transform composition (origin/order-of-
-        // operations makes that fragile); plain left/top/width/height is
-        // easy to reason about.
-        let heroFrame, cornerFrame;
+        // No corner-pin: the keyboard stayed full-size and central, then
+        // just fades and settles back slightly as you scroll past it —
+        // instead of shrinking and sliding into a corner box (which read
+        // as a "peek-a-boo" gimmick rather than a natural transition). It
+        // disappears once you've scrolled past, same as mobile already
+        // does, rather than lingering as a small floating widget.
+        let heroFrame;
         const computeFrames = () => {
-          // As big as the screen: the canvas spans nearly the full
-          // viewport (the headline overlays the top of it — the canvas is
-          // transparent and the keyboard itself sits lower in its own
-          // frame, so this doesn't collide with the text in practice).
-          // What actually made the keyboard look small before wasn't box
-          // width, it was box HEIGHT: the camera fits the keyboard to the
-          // vertical field of view, so a wide-but-short box just shows
-          // more empty space beside an unchanged-size keyboard. Height is
-          // what needs to grow.
           const heroW = Math.min(2200, innerWidth);
           const heroH = Math.min(1300, innerHeight);
           heroFrame = {
@@ -969,22 +1093,15 @@
             width: heroW,
             height: heroH,
           };
-          // The pinned corner stays a fixed, small, absolute size — it
-          // should not scale with how big the hero was.
-          const cornerW = 220;
-          const cornerH = 138;
-          cornerFrame = {
-            left: innerWidth - 24 - cornerW,
-            top: 24,
-            width: cornerW,
-            height: cornerH,
-          };
+          canvasWrap.style.left = `${heroFrame.left}px`;
+          canvasWrap.style.top = `${heroFrame.top}px`;
+          canvasWrap.style.width = `${heroFrame.width}px`;
+          canvasWrap.style.height = `${heroFrame.height}px`;
         };
         computeFrames();
         addEventListener("resize", computeFrames);
 
         const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-        const lerp = (a, b, t) => a + (b - a) * t;
         let ticking = false;
         const updateScroll = () => {
           ticking = false;
@@ -992,10 +1109,10 @@
           const rect = heroSpacer.getBoundingClientRect();
           const progress = clamp(-rect.top / Math.max(total, 1), 0, 1);
           const eased = progress * progress * (3 - 2 * progress);
-          canvasWrap.style.left = `${lerp(heroFrame.left, cornerFrame.left, eased)}px`;
-          canvasWrap.style.top = `${lerp(heroFrame.top, cornerFrame.top, eased)}px`;
-          canvasWrap.style.width = `${lerp(heroFrame.width, cornerFrame.width, eased)}px`;
-          canvasWrap.style.height = `${lerp(heroFrame.height, cornerFrame.height, eased)}px`;
+          const scale = 1 - eased * 0.14;
+          canvasWrap.style.opacity = String(clamp(1 - eased * 1.15, 0, 1));
+          canvasWrap.style.transform = `scale(${scale})`;
+          canvasWrap.style.pointerEvents = progress > 0.85 ? "none" : "auto";
           heroCopy.style.opacity = String(clamp(1 - progress * 1.6, 0, 1));
           heroCopy.style.transform = `translateX(-50%) translateY(${progress * 40}px)`;
         };

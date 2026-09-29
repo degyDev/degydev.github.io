@@ -105,13 +105,13 @@ export async function initKeyboardScene(canvas, tokens, options = {}) {
   // one aspect ratio it was tuned against — anything narrower cropped the
   // plate's left/right edges.
   const viewDir = { x: 0, y: 0.6822, z: 0.7311 }; // normalize(0, 9.5, 10.15)
-  const BOUNDING_RADIUS = 7.4; // covers the plate's half-diagonal, plus pad
+  const BOUNDING_RADIUS = 7.15; // plate's true half-diagonal (~7.07) + a hair
   const cameraBase = { x: 0, y: 0, z: 0 };
   function fitCameraDistance(aspect) {
     const vFov = (camera.fov * Math.PI) / 180;
     const hFov = 2 * Math.atan(Math.tan(vFov / 2) * aspect);
     const limitFov = Math.min(vFov, hFov);
-    return (BOUNDING_RADIUS / Math.sin(limitFov / 2)) * 1.01;
+    return (BOUNDING_RADIUS / Math.sin(limitFov / 2)) * 1.015;
   }
   function placeCamera(aspect) {
     const distance = fitCameraDistance(aspect);
