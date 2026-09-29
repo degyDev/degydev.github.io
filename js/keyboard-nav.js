@@ -14,7 +14,7 @@ const NAV_KEYS = {
   V: { hash: "resume", label: "RÉSUMÉ" },
   B: { hash: "links", label: "LINKS" },
 };
-const HOLD_MS = 750;
+const HOLD_MS = 1250;
 const LABEL_DELAY_MS = 130;
 // How long the fill has to visibly sweep across the label: whatever's left
 // of the hold once the label itself has appeared.
