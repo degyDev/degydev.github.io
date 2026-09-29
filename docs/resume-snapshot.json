@@ -1,0 +1,293 @@
+{
+  "source": "https://gitconnected.com/api/v1/resume/degydev",
+  "fetchedAt": "2026-09-15T15:14:02.899Z",
+  "basics": {
+    "name": "Munkhdelger",
+    "headline": "Senior Full-Stack Developer | Angular, Spring Boot | Building Scalable Systems",
+    "summary": "I’m a full-stack web developer with nearly a decade of experience building scalable web applications and backend systems. I specialize in Angular, React, TypeScript, Spring Boot, and Node.js. I’ve worked on national platforms like ehalamj.mn and ebarimt.mn, improving system performance and automation. I focus on clean, maintainable code and delivering practical solutions that solve real business problems.",
+    "url": "https://degydev.github.io/",
+    "profiles": [
+      {
+        "network": "gitconnected",
+        "url": "https://gitconnected.com/degydev"
+      },
+      {
+        "network": "GitHub",
+        "url": "https://github.com/degyDev"
+      },
+      {
+        "network": "LinkedIn",
+        "url": "https://www.linkedin.com/in/degydev/"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "Freelance",
+      "position": "Full Stack Developer",
+      "url": "",
+      "startDate": "2023-03-01",
+      "endDate": "",
+      "summary": "Senior Fullstack Engineer delivering high-quality software solutions on a contract basis. Experienced in developing full-stack applications from architecture to deployment, with a strong focus on performance, security, and maintainability.",
+      "highlights": [
+        "Developed a credit scoring system for a fintech client, focusing on accuracy and real-time decision-making.",
+        "Built and maintained secure solutions for collateral loan management.",
+        "Contributed significantly to the development and stability of the Simple.mn platform.",
+        "Provided clean, scalable code and ensured smooth handoff and documentation for long-term maintainability.",
+        "Worked closely with clients to gather requirements and deliver tailored, production-ready software."
+      ],
+      "location": "Mongolia"
+    },
+    {
+      "name": "Ashid Capital LLC",
+      "position": "Senior FullStack Engineer",
+      "url": "http://simple.mn/",
+      "startDate": "2023-03-01",
+      "endDate": "",
+      "summary": "Experienced Senior Fullstack Engineer skilled in leading teams of 3-7 developers, including front-end and mobile developers. Proficient in building components and designing architecture. Expertise includes:\n\n\t•\tBackend: Spring Boot, Java\n\t•\tFrontend: React, HTML, CSS, JavaScript\n\t•\tDatabase: Oracle with APEX\n\nStrong leadership experience in guiding development teams and ensuring high-quality deliverables.",
+      "highlights": [
+        "Successfully led development of credit scoring systems.",
+        "Developed robust and stable code for collateral loan management.",
+        "Played a pivotal role in the creation of the Simple.mn platform.",
+        "Consistently ensured high-quality deliverables through strong leadership and technical expertise."
+      ],
+      "location": "Mongolia"
+    },
+    {
+      "name": "information technology center of custom, taxation and finance",
+      "position": "FullStack Developer",
+      "url": "https://itc.gov.mn/",
+      "startDate": "2019-12-01",
+      "endDate": "2023-03-01",
+      "summary": "",
+      "highlights": [
+        "Built Ehalamj.mn on ReactJs, Material ui, Spring Boot",
+        "Built and developed part of ebarimt.mn",
+        "Built 1072 Shares Of \"Erdenes Tavan Tolgoi\" Mining corporation's  Web sites and Request Module"
+      ],
+      "location": "Ulaanbaatar Mongolia"
+    },
+    {
+      "name": "Mongolian Properties",
+      "position": "FullStack Developer",
+      "url": "http://www.mongolia-properties.com/",
+      "startDate": "2019-09-01",
+      "endDate": "2019-11-01",
+      "summary": "",
+      "highlights": [
+        "Built Avy.mn Online Assets Shop on Symfony with AWS"
+      ],
+      "location": "Ulaanbaatar, Mongolia"
+    },
+    {
+      "name": "Ritus LLC",
+      "position": "FullStack Developer",
+      "url": "http://www.ritus.mn/",
+      "startDate": "2017-06-01",
+      "endDate": "2019-04-01",
+      "summary": "",
+      "highlights": [
+        "Built CRM,HRM Private System on PHP",
+        "Built DISC Test Personality Detect Quiz Styled System",
+        "Built Delphi, Chronium Integration"
+      ],
+      "location": "Ulaanbaatar, Mongolia"
+    }
+  ],
+  "projects": [
+    {
+      "name": "ebarimt.mn",
+      "description": "Automated registration of VAT receipts for citizens' purchases.",
+      "startDate": "2019-12-09",
+      "endDate": "2023-03-22",
+      "url": "https://ebarimt.mn/",
+      "roles": [
+        "Developer"
+      ],
+      "highlights": [],
+      "stack": [
+        "HTML",
+        "CSS",
+        "SQL",
+        "Javascript",
+        "JAVA",
+        "Spring Boot",
+        "AngularJS",
+        "Angular2",
+        "OracleDB",
+        "NodeJS",
+        "MongoDB"
+      ]
+    },
+    {
+      "name": "1072.Ebarimt",
+      "description": "Integration of 1072 \"Erdenes Tavan Tolgoi\" shares with the Ebarimt system.",
+      "startDate": "2020-01-01",
+      "endDate": "2022-01-01",
+      "url": "https://1072.ebarimt.mn/",
+      "roles": [
+        "Developer"
+      ],
+      "highlights": [],
+      "stack": [
+        "HTML",
+        "Javascript",
+        "SQL",
+        "CSS",
+        "Java",
+        "React",
+        "Oracle",
+        "Spring Boot"
+      ]
+    },
+    {
+      "name": "QR.Ebarimt",
+      "description": "Implementation of QR code-based receipt registration in Ebarimt.",
+      "startDate": "2020-01-01",
+      "endDate": "2023-01-01",
+      "url": "https://qr.ebarimt.mn/",
+      "roles": [
+        "Developer"
+      ],
+      "highlights": [],
+      "stack": []
+    },
+    {
+      "name": "Support Aid for Covid Restriction (300k, 50k Request)",
+      "description": "Management of Covid restriction support aid requests.",
+      "startDate": "2020-01-01",
+      "endDate": "2022-01-01",
+      "url": "https://300.ebarimt.mn/",
+      "roles": [
+        "Developer"
+      ],
+      "highlights": [],
+      "stack": []
+    },
+    {
+      "name": "UB Smart Card Integration and Implementation",
+      "description": "Integration and implementation of UB Smart Card system.",
+      "startDate": "2021-01-01",
+      "endDate": "2022-01-01",
+      "url": "https://ebarimt.mn/",
+      "roles": [
+        "Developer"
+      ],
+      "highlights": [],
+      "stack": []
+    },
+    {
+      "name": "ehalamj.mn",
+      "description": "The system aims to deliver welfare pensions efficiently by using existing government-held citizen information, eliminating the need for paper documents.",
+      "startDate": "2020-02-02",
+      "endDate": "2023-03-22",
+      "url": "https://ehalamj.mn/",
+      "roles": [
+        "Developer"
+      ],
+      "highlights": [],
+      "stack": [
+        "HTML",
+        "CSS",
+        "SQL",
+        "Javascript",
+        "Java",
+        "OracleDB",
+        "NodeJs",
+        "Redis",
+        "WebSocket",
+        "ReactJS",
+        "RabbitMQ",
+        "Spring Boot",
+        "MongoDB"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "name": "HTML",
+      "level": "Advanced",
+      "keywords": []
+    },
+    {
+      "name": "CSS",
+      "level": "Advanced",
+      "keywords": []
+    },
+    {
+      "name": "TypeScript",
+      "level": "Intermediate",
+      "keywords": []
+    },
+    {
+      "name": "Spring Boot",
+      "level": "Advanced",
+      "keywords": []
+    },
+    {
+      "name": "React",
+      "level": "Advanced",
+      "keywords": []
+    },
+    {
+      "name": "Java",
+      "level": "Intermediate",
+      "keywords": []
+    },
+    {
+      "name": "NodeJs",
+      "level": "Intermediate",
+      "keywords": []
+    },
+    {
+      "name": "AngularJs",
+      "level": "Advanced",
+      "keywords": []
+    },
+    {
+      "name": "Angular2",
+      "level": "Advanced",
+      "keywords": []
+    },
+    {
+      "name": "SQL",
+      "level": "Intermediate",
+      "keywords": []
+    },
+    {
+      "name": "Javascript",
+      "level": "Advanced",
+      "keywords": []
+    }
+  ],
+  "education": [
+    {
+      "institution": "Mongolian University of Science and Technology",
+      "area": "Computer Science",
+      "studyType": "Master's Degree",
+      "startDate": "2017-09-01",
+      "endDate": "2022-06-01",
+      "score": "",
+      "courses": []
+    },
+    {
+      "institution": "Mongolian University of Science and Technology",
+      "area": "Computer Science",
+      "studyType": "Bachelor's Degree",
+      "startDate": "2013-09-01",
+      "endDate": "2017-06-01",
+      "score": "3.22",
+      "courses": []
+    }
+  ],
+  "languages": [
+    {
+      "name": "English",
+      "fluency": "Novice"
+    },
+    {
+      "name": "Mongolian",
+      "fluency": "Fluent"
+    }
+  ]
+}

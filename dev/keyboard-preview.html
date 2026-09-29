@@ -1,0 +1,908 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Keyboard nav preview</title>
+    <style>
+      /* Bold industrial-hazard palette: near-black, bone, safety orange,
+         acid lime — replacing the earlier paper/forest editorial look. */
+      @font-face {
+        font-family: "Anton";
+        src: url("../fonts/anton.woff2") format("woff2");
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Space Grotesk";
+        src: url("../fonts/space-grotesk-variable.woff2")
+          format("woff2-variations");
+        font-weight: 300 700;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Space Mono";
+        src: url("../fonts/space-mono-400.woff2") format("woff2");
+        font-weight: 400;
+        font-display: swap;
+      }
+      :root {
+        --bg: #0d0c0a;
+        --ink: #f3ede0;
+        --muted: #a39a89;
+        --accent: #ff4a1c;
+        --accent-bright: #d7ff3d;
+        --surface: #1a1815;
+        --font-display: "Anton", sans-serif;
+        --font-body: "Space Grotesk", system-ui, sans-serif;
+        --font-mono: "Space Mono", monospace;
+      }
+      * {
+        box-sizing: border-box;
+        min-width: 0;
+      }
+      html,
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--font-body);
+      }
+      .keyboard-hero-spacer {
+        height: 175vh;
+        position: relative;
+      }
+      .keyboard-stage-fixed {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+      }
+      .keyboard-canvas-wrap {
+        position: fixed;
+        pointer-events: auto;
+      }
+      canvas.keyboard-canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .keyboard-hero-copy {
+        position: fixed;
+        left: 50%;
+        top: 10%;
+        width: min(720px, 84vw);
+        transform: translateX(-50%);
+        text-align: center;
+        pointer-events: none;
+      }
+      .keyboard-hero-copy h1 {
+        font-family: var(--font-display);
+        font-weight: 400;
+        text-transform: uppercase;
+        font-size: clamp(38px, 7.5vw, 84px);
+        line-height: 0.98;
+        margin: 0 0 14px;
+        letter-spacing: 0.005em;
+      }
+      .keyboard-hero-copy p {
+        margin: 0;
+        color: var(--muted);
+        font: 13px var(--font-mono);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .keyboard-key-label {
+        position: fixed;
+        transform: translate(-50%, -140%);
+        background: var(--accent);
+        color: var(--bg);
+        font: 11px var(--font-mono);
+        letter-spacing: 0.08em;
+        padding: 5px 9px;
+        pointer-events: none;
+        white-space: nowrap;
+        z-index: 50;
+      }
+      .section {
+        padding: 12vh 8vw;
+        border-top: 1px solid #f3ede026;
+      }
+      .eyebrow {
+        display: block;
+        font: 11px var(--font-mono);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 18px;
+      }
+      .section h2 {
+        font-family: var(--font-display);
+        font-weight: 400;
+        text-transform: uppercase;
+        font-size: clamp(34px, 6vw, 68px);
+        line-height: 1;
+        margin: 0 0 20px;
+      }
+      .section > p {
+        color: var(--muted);
+        max-width: 560px;
+        line-height: 1.7;
+        font-size: 15px;
+      }
+      .section > p + p {
+        margin-top: 14px;
+      }
+
+      /* About: stat strip */
+      .stat-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        margin-top: 56px;
+        padding-top: 28px;
+        border-top: 1px solid #f3ede026;
+      }
+      .stat-strip div {
+        min-width: 140px;
+      }
+      .stat-strip strong {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 18px;
+        letter-spacing: 0.03em;
+        color: var(--ink);
+      }
+      .stat-strip span {
+        display: block;
+        font: 10px var(--font-mono);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-top: 6px;
+      }
+
+      /* Skills: grouped, no bars */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        gap: 40px;
+        margin-top: 12px;
+        max-width: 1100px;
+      }
+      .skills-grid h3 {
+        font: 11px var(--font-mono);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin: 0 0 16px;
+      }
+      .skills-grid ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .skills-grid li {
+        padding: 8px 0;
+        border-bottom: 1px solid #f3ede01a;
+        font-size: 14px;
+      }
+
+      /* Experience / archive: editorial index via <details> */
+      .exp-list {
+        margin-top: 12px;
+        max-width: 900px;
+      }
+      .exp-list details {
+        border-top: 1px solid #f3ede026;
+      }
+      .exp-list details:last-child {
+        border-bottom: 1px solid #f3ede026;
+      }
+      .exp-list summary {
+        list-style: none;
+        cursor: pointer;
+        display: grid;
+        grid-template-columns: 150px 1fr auto;
+        gap: 20px;
+        align-items: baseline;
+        padding: 18px 0;
+      }
+      .exp-list summary::-webkit-details-marker {
+        display: none;
+      }
+      .exp-date {
+        font: 10px var(--font-mono);
+        color: var(--muted);
+        letter-spacing: 0.05em;
+      }
+      .exp-role {
+        font-size: 17px;
+      }
+      .exp-role small {
+        display: block;
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 3px;
+      }
+      .exp-plus {
+        font-family: var(--font-mono);
+        color: var(--accent);
+      }
+      .exp-list details[open] .exp-plus {
+        color: var(--accent-bright);
+      }
+      .exp-body {
+        padding: 0 0 22px 170px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.8;
+        max-width: 600px;
+      }
+      .exp-body ul {
+        margin: 8px 0 0;
+        padding-left: 16px;
+      }
+
+      /* Archive: compact table */
+      .archive-table {
+        margin-top: 12px;
+        max-width: 1100px;
+        font-size: 13px;
+      }
+      .archive-row {
+        display: grid;
+        grid-template-columns: 50px 90px 1fr 1fr 1.4fr;
+        gap: 16px;
+        padding: 12px 0;
+        border-top: 1px solid #f3ede01a;
+        color: var(--muted);
+      }
+      .archive-row:first-child {
+        border-top: none;
+      }
+      .archive-row span:first-child {
+        font-family: var(--font-mono);
+        color: var(--accent);
+      }
+      .archive-row strong {
+        color: var(--ink);
+        font-weight: 400;
+      }
+
+      /* Work: simple project index (bespoke visuals come later) */
+      .work-list {
+        margin-top: 12px;
+        max-width: 900px;
+      }
+      .work-item {
+        border-top: 1px solid #f3ede026;
+        padding: 32px 0;
+      }
+      .work-item:last-child {
+        border-bottom: 1px solid #f3ede026;
+      }
+      .work-item .work-number {
+        font: 11px var(--font-mono);
+        color: var(--accent);
+        letter-spacing: 0.1em;
+      }
+      .work-item h3 {
+        font-family: var(--font-display);
+        font-weight: 400;
+        text-transform: uppercase;
+        font-size: clamp(26px, 4vw, 44px);
+        margin: 10px 0 6px;
+      }
+      .work-item .work-sub {
+        color: var(--muted);
+        font-size: 14px;
+        margin: 0 0 14px;
+      }
+      .work-item .work-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 14px;
+        font: 10px var(--font-mono);
+        letter-spacing: 0.06em;
+        color: var(--muted);
+      }
+      .work-item .work-stack span::before {
+        content: "// ";
+        color: var(--accent);
+      }
+
+      /* Philosophy */
+      .philosophy-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 40px;
+        margin-top: 12px;
+        max-width: 1100px;
+      }
+      .philosophy-grid h3 {
+        font-family: var(--font-display);
+        font-weight: 400;
+        text-transform: uppercase;
+        font-size: 24px;
+        margin: 0 0 10px;
+      }
+      .philosophy-grid p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+        max-width: 320px;
+      }
+
+      /* Contact / resume / links */
+      .contact-links,
+      .link-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px 40px;
+        margin-top: 32px;
+      }
+      .contact-links a,
+      .link-list a {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--ink);
+        text-decoration: none;
+        border-bottom: 1px solid var(--accent);
+        padding-bottom: 3px;
+      }
+      .contact-links a:hover,
+      .link-list a:hover {
+        color: var(--accent-bright);
+        border-color: var(--accent-bright);
+      }
+
+      /* Mobile: the brief is explicit that the keyboard must not stay
+         permanently pinned there (too much space) — so instead of fixed
+         position + scroll-driven shrink, it's absolutely positioned within
+         the (now shorter) hero spacer and scrolls away with the page like
+         ordinary hero content. */
+      @media (max-width: 860px) {
+        .keyboard-hero-spacer {
+          height: 100vh;
+        }
+        .keyboard-stage-fixed,
+        .keyboard-canvas-wrap,
+        .keyboard-hero-copy {
+          position: absolute;
+        }
+      }
+      @media (max-width: 700px) {
+        .section {
+          padding: 10vh 22px;
+        }
+        .exp-list summary {
+          grid-template-columns: 1fr auto;
+          row-gap: 4px;
+        }
+        .exp-date {
+          grid-column: 1 / -1;
+        }
+        .exp-body {
+          padding-left: 0;
+        }
+        .archive-row {
+          grid-template-columns: 1fr;
+          gap: 4px;
+          padding: 16px 0;
+        }
+        .archive-row span:first-child {
+          display: none;
+        }
+        .skills-grid,
+        .philosophy-grid {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+      }
+      #status {
+        position: fixed;
+        bottom: 8px;
+        left: 8px;
+        font: 11px var(--font-mono);
+        color: var(--muted);
+        z-index: 60;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="status">loading…</div>
+
+    <div class="keyboard-hero-spacer" id="hero-spacer">
+      <div class="keyboard-stage-fixed" id="stage-fixed">
+        <div class="keyboard-canvas-wrap" id="canvas-wrap">
+          <canvas class="keyboard-canvas" id="stage"></canvas>
+        </div>
+        <div class="keyboard-hero-copy" id="hero-copy">
+          <h1>I build systems that people actually have to use.</h1>
+          <p>Type a letter. Hold A S D F G / Z X C V B to navigate.</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="section" id="about">
+      <span class="eyebrow">The person behind the specimen</span>
+      <h2>I build systems that people actually have to use.</h2>
+      <p>
+        I'm a senior full-stack engineer based in Mongolia, working across
+        financial technology, public systems, mobile applications and
+        experimental products.
+      </p>
+      <p>
+        My work is usually somewhere between product engineering, system
+        architecture and turning complicated workflows into something
+        simpler.
+      </p>
+      <div class="stat-strip">
+        <div><strong>~10 YEARS</strong><span>Software engineering</span></div>
+        <div><strong>FINTECH</strong><span>Current focus</span></div>
+        <div><strong>WEB · MOBILE · BACKEND</strong><span>Primary platforms</span></div>
+        <div><strong>MONGOLIA</strong><span>Based in</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <span class="eyebrow">How I use what I know</span>
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div>
+          <h3>Systems</h3>
+          <ul>
+            <li>Java</li>
+            <li>Spring Boot</li>
+            <li>REST APIs</li>
+            <li>Messaging</li>
+            <li>Microservices</li>
+            <li>Authentication</li>
+            <li>Distributed workflows</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Interface</h3>
+          <ul>
+            <li>Angular</li>
+            <li>React</li>
+            <li>Flutter</li>
+            <li>SSR</li>
+            <li>Interactive UI</li>
+            <li>WebGPU experiments</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Data</h3>
+          <ul>
+            <li>Oracle</li>
+            <li>MariaDB</li>
+            <li>MySQL</li>
+            <li>Redis</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Infrastructure</h3>
+          <ul>
+            <li>Docker</li>
+            <li>Nginx</li>
+            <li>CI/CD</li>
+            <li>Linux</li>
+            <li>Cloud deployments</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Product engineering</h3>
+          <ul>
+            <li>Fintech</li>
+            <li>Loan systems</li>
+            <li>Payment integrations</li>
+            <li>Government integrations</li>
+            <li>Workflow design</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="experience">
+      <span class="eyebrow">The trajectory</span>
+      <h2>Experience</h2>
+      <div class="exp-list">
+        <details open>
+          <summary>
+            <span class="exp-date">MAR 2023 — NOW</span>
+            <span class="exp-role"
+              >Senior Full-Stack Engineer<small
+                >Ashid Capital LLC — Simple</small
+              ></span
+            >
+            <span class="exp-plus">+</span>
+          </summary>
+          <div class="exp-body">
+            Architecture, component design and technical direction across
+            frontend, mobile and backend. Led teams of 3–7 developers on
+            Simple's lending, scoring and collateral systems.
+            <ul>
+              <li>Led credit-scoring system development.</li>
+              <li>Built collateral-loan management functionality.</li>
+              <li>Contributed to the Simple.mn platform.</li>
+            </ul>
+          </div>
+        </details>
+        <details>
+          <summary>
+            <span class="exp-date">MAR 2023 — NOW · PARALLEL</span>
+            <span class="exp-role"
+              >Independent Full-Stack Engineering<small
+                >Freelance / contract</small
+              ></span
+            >
+            <span class="exp-plus">+</span>
+          </summary>
+          <div class="exp-body">
+            Requirements through architecture, implementation and
+            deployment for outside clients — security, maintainability and
+            documented handoffs.
+          </div>
+        </details>
+        <details>
+          <summary>
+            <span class="exp-date">DEC 2019 — MAR 2023</span>
+            <span class="exp-role"
+              >Full-Stack Developer<small
+                >Information Technology Center of Customs, Taxation and
+                Finance</small
+              ></span
+            >
+            <span class="exp-plus">+</span>
+          </summary>
+          <div class="exp-body">
+            Built software across Mongolia's public digital-service
+            ecosystem.
+            <ul>
+              <li>ehalamj.mn — React, Material UI, Spring Boot.</li>
+              <li>ebarimt.mn and 1072 shares web sites and request module.</li>
+              <li>UB Smart Card and COVID support-aid integrations.</li>
+            </ul>
+          </div>
+        </details>
+        <details>
+          <summary>
+            <span class="exp-date">SEP 2019 — NOV 2019</span>
+            <span class="exp-role"
+              >Full-Stack Developer<small>Mongolian Properties</small></span
+            >
+            <span class="exp-plus">+</span>
+          </summary>
+          <div class="exp-body">
+            Built Avy.mn, an online asset marketplace, on Symfony with AWS.
+          </div>
+        </details>
+        <details>
+          <summary>
+            <span class="exp-date">MAY 2017 — MAR 2019</span>
+            <span class="exp-role"
+              >Full-Stack Developer<small>Ritus LLC</small></span
+            >
+            <span class="exp-plus">+</span>
+          </summary>
+          <div class="exp-body">
+            Built a private CRM/HRM system in PHP, a DISC personality
+            assessment tool, and a Delphi/Chromium integration.
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="section" id="work">
+      <span class="eyebrow">Selected systems / 01—05</span>
+      <h2>Selected Work</h2>
+      <p>
+        Engineering case studies. Custom visual treatment for each is the
+        next pass — real facts, compact layout for now.
+      </p>
+      <div class="work-list">
+        <article class="work-item">
+          <span class="work-number">01 / Simple</span>
+          <h3>Simple.</h3>
+          <p class="work-sub">
+            Digital lending and financial services platform — Senior
+            Full-Stack Engineer. Lending journeys, repayments, scoring-related
+            flows, payment integrations, notifications, authentication and
+            major application releases.
+          </p>
+          <div class="work-stack">
+            <span>Java</span><span>Spring</span><span>Angular</span
+            ><span>Flutter</span><span>Oracle</span><span>Redis</span
+            ><span>ActiveMQ</span>
+          </div>
+        </article>
+        <article class="work-item">
+          <span class="work-number">02 / Welfare</span>
+          <h3>Welfare.</h3>
+          <p class="work-sub">
+            Digital public-service infrastructure — moved welfare and
+            pension-related workflows from paper-heavy processes into
+            digital services. System design, backend workflows, government
+            integrations, multi-role processes, reliability.
+          </p>
+          <div class="work-stack">
+            <span>React</span><span>Material UI</span><span>Spring Boot</span
+            ><span>Oracle</span>
+          </div>
+        </article>
+        <article class="work-item">
+          <span class="work-number">03 / GMMS</span>
+          <h3>GMMS.</h3>
+          <p class="work-sub">
+            Grant lifecycle management for environmental programmes —
+            application, review, evaluation, contract, payment, award.
+            Scoring, grievances, serious incident reporting, surveys,
+            multilingual UI.
+          </p>
+        </article>
+        <article class="work-item">
+          <span class="work-number">04 / PlateWatch</span>
+          <h3>PlateWatch.</h3>
+          <p class="work-sub">
+            Mobile-first vehicle sighting and plate-recognition experiment.
+            Mobile scans, web finds — camera detection through OCR,
+            normalization, and a searchable event.
+          </p>
+        </article>
+        <article class="work-item">
+          <span class="work-number">05 / Experiments</span>
+          <h3>Experiments.</h3>
+          <p class="work-sub">
+            Things built because ordinary interfaces are boring — WebGPU
+            material studies (this keyboard included), LAN games, browser
+            FPS experiments, interactive simulations.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="current">
+      <span class="eyebrow">Right now</span>
+      <h2>Current Work</h2>
+      <p>
+        Senior Full-Stack Engineer at Ashid Capital, building Simple's
+        lending, scoring and collateral systems — architecture, component
+        design and technical direction across frontend, mobile and backend.
+      </p>
+      <p>Independent contract engineering in parallel: requirements through
+        deployment for outside clients.</p>
+      <div class="philosophy-grid" style="margin-top: 48px">
+        <div>
+          <h3>Make the difficult part invisible.</h3>
+          <p>Complex systems should not feel complex to the person using them.</p>
+        </div>
+        <div>
+          <h3>Own the whole flow.</h3>
+          <p>Frontend, backend and infrastructure are one product problem, not separate departments.</p>
+        </div>
+        <div>
+          <h3>Prototype before debating.</h3>
+          <p>A working experiment often answers questions faster than another meeting.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="education">
+      <span class="eyebrow">The foundation</span>
+      <h2>Education</h2>
+      <div class="exp-list">
+        <details>
+          <summary>
+            <span class="exp-date">2017 — 2022</span>
+            <span class="exp-role"
+              >MSc, Computer Science<small
+                >Mongolian University of Science and Technology</small
+              ></span
+            >
+            <span class="exp-plus">+</span>
+          </summary>
+          <div class="exp-body">Master's degree, Computer Science.</div>
+        </details>
+        <details>
+          <summary>
+            <span class="exp-date">2013 — 2017</span>
+            <span class="exp-role"
+              >BSc, Computer Science<small
+                >Mongolian University of Science and Technology</small
+              ></span
+            >
+            <span class="exp-plus">+</span>
+          </summary>
+          <div class="exp-body">Bachelor's degree, Computer Science.</div>
+        </details>
+      </div>
+    </section>
+
+    <section class="section" id="archive">
+      <span class="eyebrow">Everything else</span>
+      <h2>Archive</h2>
+      <div class="archive-table">
+        <div class="archive-row">
+          <span>01</span><span>2023—now</span
+          ><strong>Simple</strong><span>Fintech</span
+          ><span>Java · Spring · Angular · Flutter · Oracle · Redis · ActiveMQ</span>
+        </div>
+        <div class="archive-row">
+          <span>02</span><span>2019—2023</span
+          ><strong>Welfare (ehalamj.mn)</strong><span>Public sector</span
+          ><span>React · Spring Boot · Oracle</span>
+        </div>
+        <div class="archive-row">
+          <span>03</span><span>—</span
+          ><strong>GMMS</strong><span>Environmental programmes</span
+          ><span>Grant lifecycle management</span>
+        </div>
+        <div class="archive-row">
+          <span>04</span><span>—</span
+          ><strong>PlateWatch</strong><span>Experimental</span
+          ><span>Mobile OCR + web search</span>
+        </div>
+        <div class="archive-row">
+          <span>05</span><span>2019—2023</span
+          ><strong>eBarimt / 1072 / UB Smart Card</strong
+          ><span>Public infrastructure</span><span>Java · SQL</span>
+        </div>
+        <div class="archive-row">
+          <span>06</span><span>2019</span
+          ><strong>Avy.mn (Mongolian Properties)</strong><span>Marketplace</span
+          ><span>Symfony · AWS</span>
+        </div>
+        <div class="archive-row">
+          <span>07</span><span>2017—2019</span
+          ><strong>CRM/HRM + DISC (Ritus)</strong><span>Business software</span
+          ><span>PHP</span>
+        </div>
+        <div class="archive-row">
+          <span>08</span><span>—</span
+          ><strong>WebGPU keyboard experiment</strong><span>Personal</span
+          ><span>Three.js · WebGPU · TSL</span>
+        </div>
+        <div class="archive-row">
+          <span>09</span><span>—</span
+          ><strong>LAN Tetris</strong><span>Personal</span><span>Game</span>
+        </div>
+        <div class="archive-row">
+          <span>10</span><span>—</span
+          ><strong>Browser FPS</strong><span>Personal</span><span>Game</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="resume">
+      <span class="eyebrow">On paper</span>
+      <h2>Résumé.</h2>
+      <p>The full CV, kept current.</p>
+      <div class="link-list">
+        <a href="https://gitconnected.com/degydev/resume" target="_blank" rel="noopener noreferrer">View CV ↗</a>
+      </div>
+    </section>
+
+    <section class="section" id="links">
+      <span class="eyebrow">Elsewhere</span>
+      <h2>Links.</h2>
+      <div class="link-list">
+        <a href="https://www.linkedin.com/in/degydev/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        <a href="https://github.com/degydev" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        <a href="https://gitconnected.com/degydev" target="_blank" rel="noopener noreferrer">GitConnected ↗</a>
+        <a href="https://stackoverflow.com/users/6350299/munkhdelger-tumenbayar" target="_blank" rel="noopener noreferrer">Stack Overflow ↗</a>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <span class="eyebrow">End of specimen</span>
+      <h2>Have something difficult to build?</h2>
+      <div class="contact-links">
+        <a href="mailto:munkhdelger95@gmail.com">Email ↗</a>
+        <a href="https://www.linkedin.com/in/degydev/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        <a href="https://github.com/degydev" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        <a href="https://gitconnected.com/degydev/resume" target="_blank" rel="noopener noreferrer">Résumé ↗</a>
+      </div>
+    </section>
+
+    <script type="module">
+      import { initKeyboardNav } from "../js/keyboard-nav.js";
+
+      const status = document.getElementById("status");
+      const canvas = document.getElementById("stage");
+      const heroSpacer = document.getElementById("hero-spacer");
+      const canvasWrap = document.getElementById("canvas-wrap");
+      const heroCopy = document.getElementById("hero-copy");
+      const isDesktop = matchMedia("(min-width: 861px)").matches;
+
+      const tokens = {
+        ink: "#0d0c0a",
+        muted: "#3a352c",
+        surface: "#1a1815",
+        surfaceRaised: "#221f1b",
+        bg: "#f3ede0",
+        accentBright: "#ff4a1c",
+      };
+
+      const nav = initKeyboardNav({
+        canvas,
+        labelHost: document.body,
+        tokens,
+        onNavigate: (hash) => (status.textContent = "at #" + hash),
+      });
+      nav.ensureScene().then(() => (status.textContent = "scene ready"));
+
+      addEventListener("pointermove", (e) => {
+        nav.scene?.setPointer(e.clientX / innerWidth - 0.5, e.clientY / innerHeight - 0.5);
+      });
+
+      // Two explicit pixel frames — hero and corner — interpolated directly.
+      // No CSS transform composition (origin/order-of-operations makes that
+      // fragile); plain left/top/width/height is easy to reason about.
+      let heroFrame, cornerFrame;
+      function computeFrames() {
+        const heroW = Math.min(900, innerWidth * 0.84);
+        const heroH = Math.min(560, innerWidth * 0.5);
+        heroFrame = {
+          left: innerWidth / 2 - heroW / 2,
+          top: innerHeight * 0.66 - heroH / 2,
+          width: heroW,
+          height: heroH,
+        };
+        const cornerW = heroW * 0.32;
+        const cornerH = heroH * 0.32;
+        cornerFrame = {
+          left: innerWidth - 24 - cornerW,
+          top: 24,
+          width: cornerW,
+          height: cornerH,
+        };
+      }
+      computeFrames();
+      addEventListener("resize", computeFrames);
+
+      function clamp(v, a, b) {
+        return Math.max(a, Math.min(b, v));
+      }
+      function lerp(a, b, t) {
+        return a + (b - a) * t;
+      }
+      let ticking = false;
+      function applyFrame(frame) {
+        canvasWrap.style.left = `${frame.left}px`;
+        canvasWrap.style.top = `${frame.top}px`;
+        canvasWrap.style.width = `${frame.width}px`;
+        canvasWrap.style.height = `${frame.height}px`;
+      }
+      function updateScroll() {
+        ticking = false;
+        if (!isDesktop) {
+          applyFrame(heroFrame);
+          return;
+        }
+        const total = heroSpacer.offsetHeight - innerHeight;
+        const rect = heroSpacer.getBoundingClientRect();
+        const progress = clamp(-rect.top / Math.max(total, 1), 0, 1);
+        const eased = progress * progress * (3 - 2 * progress);
+        canvasWrap.style.left = `${lerp(heroFrame.left, cornerFrame.left, eased)}px`;
+        canvasWrap.style.top = `${lerp(heroFrame.top, cornerFrame.top, eased)}px`;
+        canvasWrap.style.width = `${lerp(heroFrame.width, cornerFrame.width, eased)}px`;
+        canvasWrap.style.height = `${lerp(heroFrame.height, cornerFrame.height, eased)}px`;
+        heroCopy.style.opacity = String(clamp(1 - progress * 1.6, 0, 1));
+        heroCopy.style.transform = `translateX(-50%) translateY(${progress * 40}px)`;
+      }
+      addEventListener(
+        "scroll",
+        () => {
+          if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(updateScroll);
+          }
+        },
+        { passive: true },
+      );
+      updateScroll();
+    </script>
+  </body>
+</html>
