@@ -14,8 +14,14 @@ const NAV_KEYS = {
   V: { hash: "resume", label: "RÉSUMÉ" },
   B: { hash: "links", label: "LINKS" },
 };
-const HOLD_MS = 400;
+const HOLD_MS = 750;
 const LABEL_DELAY_MS = 130;
+// How long the fill has to visibly sweep across the label: whatever's left
+// of the hold once the label itself has appeared.
+const FILL_MS = HOLD_MS - LABEL_DELAY_MS;
+// The label shakes for this last stretch before the jump — a "here it
+// comes" cue right before activation fires.
+const SHAKE_MS = 220;
 
 export function initKeyboardNav({ canvas, labelHost, tokens, onNavigate }) {
   let scene = null;
@@ -25,15 +31,27 @@ export function initKeyboardNav({ canvas, labelHost, tokens, onNavigate }) {
   const label = document.createElement("div");
   label.className = "keyboard-key-label";
   label.style.display = "none";
+  const labelInner = document.createElement("div");
+  labelInner.className = "keyboard-key-label-inner";
+  const labelFill = document.createElement("span");
+  labelFill.className = "keyboard-key-label-fill";
+  const labelText = document.createElement("span");
+  labelText.className = "keyboard-key-label-text";
+  labelInner.append(labelFill, labelText);
+  label.append(labelInner);
   labelHost.appendChild(label);
 
   // The label pops up like a little balloon released from the key (see the
   // .is-visible transition in CSS) and lingers for a beat after release
-  // instead of vanishing the instant you let go.
+  // instead of vanishing the instant you let go. While held, a fill sweeps
+  // across it so the hold-to-activate threshold is something you can see
+  // coming, and it shakes for the last stretch as a "here it comes" cue
+  // right before the jump — not a sudden jump with no warning.
   const LABEL_LINGER_MS = 450;
   const LABEL_EXIT_MS = 350;
   let labelGraceTimer = null;
   let labelCleanupTimer = null;
+  let labelShakeTimer = null;
   function showLabel(letter) {
     const def = NAV_KEYS[letter];
     if (!def || !scene) return;
@@ -41,19 +59,35 @@ export function initKeyboardNav({ canvas, labelHost, tokens, onNavigate }) {
     if (!point) return;
     clearTimeout(labelGraceTimer);
     clearTimeout(labelCleanupTimer);
-    label.textContent = `${letter} / ${def.label}`;
+    clearTimeout(labelShakeTimer);
+    label.classList.remove("is-shaking");
+    labelText.textContent = `${letter} / ${def.label}`;
     label.style.left = `${point.x}px`;
     label.style.top = `${point.y}px`;
     label.style.display = "block";
+    // Reset the fill with no transition, then start it on the next frame —
+    // otherwise the browser can coalesce the reset and the fill-to-100%
+    // into one no-op instead of actually animating.
+    labelFill.style.transition = "none";
+    labelFill.style.transform = "scaleX(0)";
     // Force a reflow so re-triggering the entrance (e.g. tapping the same
     // key again while it's mid-exit) actually restarts the transition.
     void label.offsetWidth;
     label.classList.add("is-visible");
+    requestAnimationFrame(() => {
+      labelFill.style.transition = `transform ${FILL_MS}ms linear`;
+      labelFill.style.transform = "scaleX(1)";
+    });
+    labelShakeTimer = setTimeout(
+      () => label.classList.add("is-shaking"),
+      Math.max(0, FILL_MS - SHAKE_MS),
+    );
   }
   function hideLabel() {
     clearTimeout(labelGraceTimer);
     labelGraceTimer = setTimeout(() => {
-      label.classList.remove("is-visible");
+      label.classList.remove("is-visible", "is-shaking");
+      clearTimeout(labelShakeTimer);
       clearTimeout(labelCleanupTimer);
       labelCleanupTimer = setTimeout(() => {
         label.style.display = "none";

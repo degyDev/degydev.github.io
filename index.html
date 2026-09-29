@@ -157,6 +157,7 @@
       }
       .keyboard-key-label {
         position: fixed;
+        overflow: hidden;
         background: var(--accent);
         color: var(--bg);
         font: 11px var(--font-mono);
@@ -174,6 +175,43 @@
       .keyboard-key-label.is-visible {
         opacity: 1;
         transform: translate(-50%, -170%) scale(1);
+      }
+      /* Sweeps left-to-right while the key is held, so the hold-to-activate
+         threshold is visible coming rather than a sudden jump. */
+      .keyboard-key-label-fill {
+        position: absolute;
+        inset: 0;
+        background: var(--bg);
+        opacity: 0.42;
+        transform: scaleX(0);
+        transform-origin: left;
+      }
+      .keyboard-key-label-text {
+        position: relative;
+      }
+      .keyboard-key-label-inner {
+        position: relative;
+      }
+      @keyframes keyboard-key-label-shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        20% {
+          transform: translateX(-2px);
+        }
+        40% {
+          transform: translateX(2px);
+        }
+        60% {
+          transform: translateX(-1.5px);
+        }
+        80% {
+          transform: translateX(1.5px);
+        }
+      }
+      .keyboard-key-label.is-shaking .keyboard-key-label-inner {
+        animation: keyboard-key-label-shake 0.14s linear infinite;
       }
       .section {
         padding: 12vh 8vw;
