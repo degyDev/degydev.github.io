@@ -24,21 +24,41 @@ export function initKeyboardNav({ canvas, labelHost, tokens, onNavigate }) {
 
   const label = document.createElement("div");
   label.className = "keyboard-key-label";
-  label.hidden = true;
+  label.style.display = "none";
   labelHost.appendChild(label);
 
+  // The label pops up like a little balloon released from the key (see the
+  // .is-visible transition in CSS) and lingers for a beat after release
+  // instead of vanishing the instant you let go.
+  const LABEL_LINGER_MS = 450;
+  const LABEL_EXIT_MS = 350;
+  let labelGraceTimer = null;
+  let labelCleanupTimer = null;
   function showLabel(letter) {
     const def = NAV_KEYS[letter];
     if (!def || !scene) return;
     const point = scene.getKeyScreenPosition(letter);
     if (!point) return;
+    clearTimeout(labelGraceTimer);
+    clearTimeout(labelCleanupTimer);
     label.textContent = `${letter} / ${def.label}`;
     label.style.left = `${point.x}px`;
     label.style.top = `${point.y}px`;
-    label.hidden = false;
+    label.style.display = "block";
+    // Force a reflow so re-triggering the entrance (e.g. tapping the same
+    // key again while it's mid-exit) actually restarts the transition.
+    void label.offsetWidth;
+    label.classList.add("is-visible");
   }
   function hideLabel() {
-    label.hidden = true;
+    clearTimeout(labelGraceTimer);
+    labelGraceTimer = setTimeout(() => {
+      label.classList.remove("is-visible");
+      clearTimeout(labelCleanupTimer);
+      labelCleanupTimer = setTimeout(() => {
+        label.style.display = "none";
+      }, LABEL_EXIT_MS);
+    }, LABEL_LINGER_MS);
   }
 
   function navigateTo(hash) {
