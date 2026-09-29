@@ -178,6 +178,13 @@ export async function initKeyboardScene(canvas, tokens, options = {}) {
     roughness: 0.6,
     metalness: 0.03,
   });
+  // The ten navigation keys get their own cap color so they read as
+  // special at rest, not just on interaction.
+  const navCapMaterial = new MeshStandardMaterial({
+    color: new Color(accentBright),
+    roughness: 0.55,
+    metalness: 0.04,
+  });
   const spaceGeometry = new RoundedBoxGeometry(
     layout.get(" ").width,
     KEY_HEIGHT,
@@ -197,7 +204,7 @@ export async function initKeyboardScene(canvas, tokens, options = {}) {
   for (const [letter, position] of layout) {
     const isNav = navLetters.has(letter);
     const geometry = letter === " " ? spaceGeometry : capGeometry;
-    const mesh = new Mesh(geometry, capMaterial);
+    const mesh = new Mesh(geometry, isNav ? navCapMaterial : capMaterial);
     const restY = plateTopY + KEY_HEIGHT / 2 + 0.012;
     mesh.position.set(position.x, restY, position.z);
     mesh.castShadow = true;
@@ -206,7 +213,7 @@ export async function initKeyboardScene(canvas, tokens, options = {}) {
       const legend = new Mesh(
         legendGeometry,
         new MeshBasicMaterial({
-          map: makeLetterTexture(letter, isNav ? accentBright : ink),
+          map: makeLetterTexture(letter, isNav ? bg : ink),
           transparent: true,
           depthWrite: false,
         }),
