@@ -94,9 +94,29 @@ export async function initKeyboardScene(canvas, tokens) {
   renderer.setClearColor(0x000000, 0);
 
   const scene = new Scene();
-  const camera = new PerspectiveCamera(32, 1, 0.1, 40);
-  const cameraBase = { x: 0, y: 9.5, z: 10.5 };
+  const camera = new PerspectiveCamera(32, 1, 0.1, 60);
   const lookTarget = { x: 0, y: 0, z: 0.35 };
+  // Fixed viewing angle (direction only); resize() sets the actual distance
+  // each time so the whole plate fits the frustum regardless of the
+  // container's aspect ratio. A hardcoded distance only ever worked for the
+  // one aspect ratio it was tuned against — anything narrower cropped the
+  // plate's left/right edges.
+  const viewDir = { x: 0, y: 0.6822, z: 0.7311 }; // normalize(0, 9.5, 10.15)
+  const BOUNDING_RADIUS = 7.4; // covers the plate's half-diagonal, plus pad
+  const cameraBase = { x: 0, y: 0, z: 0 };
+  function fitCameraDistance(aspect) {
+    const vFov = (camera.fov * Math.PI) / 180;
+    const hFov = 2 * Math.atan(Math.tan(vFov / 2) * aspect);
+    const limitFov = Math.min(vFov, hFov);
+    return (BOUNDING_RADIUS / Math.sin(limitFov / 2)) * 1.08;
+  }
+  function placeCamera(aspect) {
+    const distance = fitCameraDistance(aspect);
+    cameraBase.x = lookTarget.x + viewDir.x * distance;
+    cameraBase.y = lookTarget.y + viewDir.y * distance;
+    cameraBase.z = lookTarget.z + viewDir.z * distance;
+  }
+  placeCamera(1.68);
   camera.position.set(cameraBase.x, cameraBase.y, cameraBase.z);
   camera.lookAt(lookTarget.x, lookTarget.y, lookTarget.z);
 
@@ -280,7 +300,9 @@ export async function initKeyboardScene(canvas, tokens) {
     width = w;
     height = h;
     renderer.setSize(w, h, false);
-    camera.aspect = w / Math.max(h, 1);
+    const aspect = w / Math.max(h, 1);
+    camera.aspect = aspect;
+    placeCamera(aspect);
     camera.updateProjectionMatrix();
   }
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.75));
