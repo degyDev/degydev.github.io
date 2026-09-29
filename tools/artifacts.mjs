@@ -1,27 +1,34 @@
+// Regenerates images/social.png (screenshot of the real hero, WebGPU and
+// all — most authentic representation of the actual site) and
+// images/apple-touch-icon.png (rendered from images/mark.svg). Requires
+// the local server running (npm run dev) since it navigates to the live
+// page rather than faking a stand-in.
 import { chromium } from "playwright";
 import { readFile, mkdir } from "node:fs/promises";
-import { pathToFileURL } from "node:url";
-import { resolve } from "node:path";
-const browser = await chromium.launch({ channel: "chrome", headless: true });
+
+const origin = "http://127.0.0.1:4173";
+const browser = await chromium.launch({
+  channel: "chrome",
+  headless: true,
+  args: ["--enable-unsafe-swiftshader", "--enable-unsafe-webgpu"],
+});
 try {
+  // The hero's composition needs real height to lay out without the
+  // headline and keyboard colliding — render taller than the final OG
+  // card and crop a well-framed 1200x630 slice out of it, rather than
+  // squeezing the live layout into the OG aspect ratio directly.
   const page = await browser.newPage({
-    viewport: { width: 1200, height: 630 },
+    viewport: { width: 1200, height: 1000 },
     deviceScaleFactor: 1,
   });
-  const html = await readFile("index.html", "utf8");
-  const svg = html.match(/<svg\s+class="system-model"[\s\S]*?<\/svg>/)[0];
-  const styles = await readFile("css/sections.css", "utf8");
-  // page.setContent has no base URL, so @font-face's relative "../fonts/…"
-  // is rewritten to an absolute file:// URL for this offline render only.
-  const base = (await readFile("css/base.css", "utf8")).replace(
-    /url\("\.\.\/fonts\//g,
-    `url("${pathToFileURL(resolve("fonts")).href}/`,
-  );
-  await page.setContent(
-    `<style>${base}${styles}body{width:1200px;height:630px;padding:55px 65px;position:relative;overflow:hidden}header{font:13px var(--mono);letter-spacing:2px;color:var(--accent)}h1{font-size:76px;margin-top:59px;line-height:1.02}p{font-size:16px;margin-top:25px;max-width:480px}svg{position:absolute;right:10px;top:85px;width:550px}footer{position:absolute;bottom:45px;left:65px;right:65px;border-top:1px solid var(--line);padding-top:20px;display:flex;justify-content:space-between;font:12px var(--mono);color:var(--muted)}</style><header>MUNKHDELGER TUMENBAYAR / DEGYDEV</header><h1>I build systems<br>that people<br><em>depend on.</em></h1><p>Senior Full-Stack Engineer<br>Software Architect / Technical Lead</p>${svg}<footer><span>PUBLIC SERVICES → FINTECH → PRODUCTION</span><span>degydev.github.io ↗</span></footer>`,
-  );
-  await page.evaluate(() => document.fonts.ready);
-  await page.screenshot({ path: "images/social.png" });
+  await page.goto(origin);
+  // Give the deferred WebGPU import + first frame time to land.
+  await page.waitForTimeout(2500);
+  await page.screenshot({
+    path: "images/social.png",
+    clip: { x: 0, y: 70, width: 1200, height: 630 },
+  });
+
   await page.setViewportSize({ width: 180, height: 180 });
   await page.setContent(
     `<style>body{margin:0}svg{width:180px;height:180px}</style>${await readFile("images/mark.svg", "utf8")}`,
@@ -29,7 +36,7 @@ try {
   await page.screenshot({ path: "images/apple-touch-icon.png" });
   await mkdir(".preview", { recursive: true });
   console.log(
-    "Generated social preview and touch icon from original vector artwork.",
+    "Generated social preview (live hero screenshot) and touch icon.",
   );
 } finally {
   await browser.close();
