@@ -18,15 +18,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      - name: Set up Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
-        with:
-          node-version: 22
-          cache: npm
-      - name: Install dependencies
-        run: npm ci
-      - name: Build site
-        run: npm run dev
+      # package.json only provides a development server and browser checks.
+      # The production HTML, CSS, JavaScript, and assets are already checked in.
+      - name: Prepare static site
+        run: |
+          mkdir -p dist
+          cp index.html .nojekyll robots.txt sitemap.xml site.webmanifest dist/
+          cp -R css js fonts images dist/
       - name: Upload built site
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
         with:
