@@ -397,8 +397,8 @@
           transform: none !important;
         }
         .keyboard-canvas-wrap {
-          width: min(720px, 96vw);
-          height: min(460px, 78vw);
+          width: min(820px, 98vw);
+          height: min(560px, 92vw);
         }
       }
       .keyboard-scroll-cue {
@@ -917,11 +917,11 @@
           // vertical field of view, so a wide-but-short box just shows
           // more empty space beside an unchanged-size keyboard. Height is
           // what needs to grow.
-          const heroW = Math.min(1700, innerWidth * 0.97);
-          const heroH = Math.min(1000, innerHeight * 0.94);
+          const heroW = Math.min(2200, innerWidth);
+          const heroH = Math.min(1300, innerHeight);
           heroFrame = {
             left: innerWidth / 2 - heroW / 2,
-            top: innerHeight * 0.5 - heroH / 2 + 20,
+            top: innerHeight / 2 - heroH / 2,
             width: heroW,
             height: heroH,
           };

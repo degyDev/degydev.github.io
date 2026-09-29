@@ -56,7 +56,9 @@ export function initKeyboardNav({ canvas, labelHost, tokens, onNavigate }) {
         "./keyboard-scene.bundle.js"
       );
       if (!supportsWebgpu()) return;
-      scene = await initKeyboardScene(canvas, tokens);
+      scene = await initKeyboardScene(canvas, tokens, {
+        navLetters: Object.keys(NAV_KEYS),
+      });
       const rect = canvas.getBoundingClientRect();
       scene.resize(rect.width, rect.height);
       scene.start();

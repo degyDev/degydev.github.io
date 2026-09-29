@@ -82,8 +82,11 @@ function buildLayout() {
   return positions;
 }
 
-export async function initKeyboardScene(canvas, tokens) {
+const DEFAULT_NAV_LETTERS = ["A", "S", "D", "F", "G", "Z", "X", "C", "V", "B"];
+
+export async function initKeyboardScene(canvas, tokens, options = {}) {
   const { ink, muted, surface, surfaceRaised, bg, accentBright } = tokens;
+  const navLetters = new Set(options.navLetters ?? DEFAULT_NAV_LETTERS);
   const renderer = new WebGPURenderer({
     canvas,
     antialias: true,
@@ -108,7 +111,7 @@ export async function initKeyboardScene(canvas, tokens) {
     const vFov = (camera.fov * Math.PI) / 180;
     const hFov = 2 * Math.atan(Math.tan(vFov / 2) * aspect);
     const limitFov = Math.min(vFov, hFov);
-    return (BOUNDING_RADIUS / Math.sin(limitFov / 2)) * 1.08;
+    return (BOUNDING_RADIUS / Math.sin(limitFov / 2)) * 1.01;
   }
   function placeCamera(aspect) {
     const distance = fitCameraDistance(aspect);
@@ -175,6 +178,13 @@ export async function initKeyboardScene(canvas, tokens) {
     roughness: 0.6,
     metalness: 0.03,
   });
+  // The ten navigation keys get their own cap color so they read as
+  // special at rest, not just on interaction.
+  const navCapMaterial = new MeshStandardMaterial({
+    color: new Color(accentBright),
+    roughness: 0.55,
+    metalness: 0.04,
+  });
   const spaceGeometry = new RoundedBoxGeometry(
     layout.get(" ").width,
     KEY_HEIGHT,
@@ -192,8 +202,9 @@ export async function initKeyboardScene(canvas, tokens) {
   const keyGroup = new Group();
   scene.add(keyGroup);
   for (const [letter, position] of layout) {
+    const isNav = navLetters.has(letter);
     const geometry = letter === " " ? spaceGeometry : capGeometry;
-    const mesh = new Mesh(geometry, capMaterial);
+    const mesh = new Mesh(geometry, isNav ? navCapMaterial : capMaterial);
     const restY = plateTopY + KEY_HEIGHT / 2 + 0.012;
     mesh.position.set(position.x, restY, position.z);
     mesh.castShadow = true;
@@ -202,7 +213,7 @@ export async function initKeyboardScene(canvas, tokens) {
       const legend = new Mesh(
         legendGeometry,
         new MeshBasicMaterial({
-          map: makeLetterTexture(letter, ink),
+          map: makeLetterTexture(letter, isNav ? bg : ink),
           transparent: true,
           depthWrite: false,
         }),
