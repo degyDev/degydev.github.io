@@ -13,7 +13,7 @@
     <meta property="og:type" content="website" />
     <meta
       property="og:title"
-      content="Munkhdelger Tumenbayar — I build systems that people actually have to use."
+      content="Munkhdelger Tumenbayar — I build things I hope people find useful."
     />
     <meta
       property="og:description"
@@ -28,7 +28,7 @@
     <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="Munkhdelger Tumenbayar — I build systems that people actually have to use."
+      content="Munkhdelger Tumenbayar — I build things I hope people find useful."
     />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="images/mark.svg" type="image/svg+xml" />
@@ -622,6 +622,101 @@
           gap: 4px 10px;
         }
       }
+      .light-mode-toggle {
+        flex-shrink: 0;
+        width: 26px;
+        height: 26px;
+        border: 1px solid var(--muted);
+        border-radius: 50%;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+      }
+      .light-mode-toggle:hover {
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+      /* The joke: this never actually switches to a light theme — it
+         flashes, a few bugs show up (light attracts bugs, and "bugs" —
+         you know), and it apologizes. */
+      .light-flash {
+        position: fixed;
+        inset: 0;
+        background: #f3ede0;
+        opacity: 0;
+        z-index: 85;
+        pointer-events: none;
+        transition: opacity 0.18s ease;
+      }
+      .light-flash.is-flashing {
+        opacity: 0.92;
+        transition: opacity 0.06s ease;
+      }
+      .light-toast {
+        position: fixed;
+        top: 58px;
+        left: 50%;
+        z-index: 90;
+        transform: translateX(-50%) translateY(-6px);
+        background: var(--accent);
+        color: var(--bg);
+        font: 11px var(--font-mono);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 9px 16px;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s ease;
+        white-space: nowrap;
+      }
+      .light-toast.is-visible {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+      .light-bug {
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 89;
+        font-size: 20px;
+        pointer-events: none;
+        opacity: 0;
+        animation: light-bug-flutter 1.6s ease-in forwards;
+      }
+      @keyframes light-bug-flutter {
+        0% {
+          opacity: 0;
+          transform: translate(var(--sx), var(--sy)) rotate(0deg) scale(0.6);
+        }
+        12% {
+          opacity: 1;
+        }
+        45% {
+          transform: translate(
+              calc((var(--sx) + var(--ex)) / 2 + 30px),
+              calc((var(--sy) + var(--ey)) / 2 - 40px)
+            )
+            rotate(180deg) scale(1);
+        }
+        85% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: translate(var(--ex), var(--ey)) rotate(340deg) scale(0.8);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .light-bug {
+          animation: none;
+          display: none;
+        }
+      }
       #status {
         position: fixed;
         bottom: 8px;
@@ -647,13 +742,22 @@
         <a href="#resume">CV</a>
         <a href="#links">Links</a>
       </nav>
+      <button
+        type="button"
+        class="light-mode-toggle"
+        id="light-toggle"
+        title="Light mode"
+        aria-label="Try light mode"
+      >
+        ☀
+      </button>
     </header>
     <div id="status">loading…</div>
 
     <div class="keyboard-hero-spacer" id="hero-spacer">
       <div class="keyboard-stage-fixed" id="stage-fixed">
         <div class="keyboard-hero-copy" id="hero-copy">
-          <h1>I build systems that people actually have to use.</h1>
+          <h1>I build things I hope people find useful.</h1>
           <p id="hero-hint">Type a letter. Hold A S D F G / Z X C V B to navigate.</p>
         </div>
         <div class="keyboard-canvas-wrap" id="canvas-wrap">
@@ -667,7 +771,7 @@
 
     <section class="section" id="about">
       <span class="eyebrow">The person behind the specimen</span>
-      <h2>I build systems that people actually have to use.</h2>
+      <h2>I try to build things that actually help.</h2>
       <p>
         I'm a senior full-stack engineer based in Mongolia, working across
         financial technology, public systems, mobile applications and
@@ -1097,6 +1201,54 @@
         history.pushState(null, "", location.pathname);
         scrollTo({ top: 0, behavior: "smooth" });
       });
+
+      // A "light mode" button that doesn't actually have a light theme to
+      // switch to — it flashes, a few bugs show up, and it apologizes.
+      const lightToggle = document.getElementById("light-toggle");
+      if (lightToggle) {
+        const flash = document.createElement("div");
+        flash.className = "light-flash";
+        const toast = document.createElement("div");
+        toast.className = "light-toast";
+        toast.textContent = "Light mode attracts bugs. Reverting.";
+        document.body.append(flash, toast);
+        const BUG_EMOJI = ["🦟", "🪰", "🐛", "🦋"];
+        let toastTimer = null;
+        lightToggle.addEventListener("click", () => {
+          flash.classList.add("is-flashing");
+          setTimeout(() => flash.classList.remove("is-flashing"), 90);
+          clearTimeout(toastTimer);
+          toast.classList.add("is-visible");
+          toastTimer = setTimeout(
+            () => toast.classList.remove("is-visible"),
+            2200,
+          );
+          if (motionReduced) return;
+          const target = lightToggle.getBoundingClientRect();
+          const bugCount = 6;
+          for (let i = 0; i < bugCount; i++) {
+            const bug = document.createElement("span");
+            bug.className = "light-bug";
+            bug.textContent =
+              BUG_EMOJI[Math.floor(Math.random() * BUG_EMOJI.length)];
+            const startX = Math.random() * innerWidth;
+            const startY = innerHeight + 30;
+            bug.style.setProperty("--sx", `${startX}px`);
+            bug.style.setProperty("--sy", `${startY}px`);
+            bug.style.setProperty(
+              "--ex",
+              `${target.left + 10 + Math.random() * 16}px`,
+            );
+            bug.style.setProperty(
+              "--ey",
+              `${target.top + 10 + Math.random() * 10}px`,
+            );
+            bug.style.animationDelay = `${i * 70}ms`;
+            document.body.appendChild(bug);
+            setTimeout(() => bug.remove(), 1900 + i * 70);
+          }
+        });
+      }
 
       addEventListener("pointermove", (e) => {
         nav.scene?.setPointer(e.clientX / innerWidth - 0.5, e.clientY / innerHeight - 0.5);
