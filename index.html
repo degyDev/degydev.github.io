@@ -1,9 +1,9 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f1f0e9" />
+    <meta name="theme-color" content="#0d0c0a" />
     <title>Munkhdelger Tumenbayar — Senior Full-Stack Engineer</title>
     <meta
       name="description"
@@ -34,917 +34,969 @@
     <link rel="icon" href="images/mark.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
     <link rel="manifest" href="site.webmanifest" />
-    <link
-      rel="preload"
-      href="fonts/fraunces-variable.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="fonts/space-mono-400.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/sections.css" />
-    <link rel="stylesheet" href="css/motion.css" />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Munkhdelger Tumenbayar",
-        "alternateName": "degydev",
-        "url": "https://degydev.github.io/",
-        "jobTitle": "Senior Full-Stack Engineer",
-        "email": "mailto:munkhdelger95@gmail.com",
-        "sameAs": [
-          "https://github.com/degydev",
-          "https://www.linkedin.com/in/degydev/",
-          "https://gitconnected.com/degydev/resume"
-        ],
-        "alumniOf": {
-          "@type": "CollegeOrUniversity",
-          "name": "Mongolian University of Science and Technology"
-        },
-        "knowsAbout": [
-          "Software Architecture",
-          "Technical Leadership",
-          "Java",
-          "Spring Boot",
-          "React",
-          "Angular",
-          "TypeScript",
-          "SQL"
-        ]
+    <style>
+      /* Bold industrial-hazard palette: near-black, bone, safety orange,
+         acid lime — replacing the earlier paper/forest editorial look. */
+      @font-face {
+        font-family: "Anton";
+        src: url("./fonts/anton.woff2") format("woff2");
+        font-weight: 400;
+        font-display: swap;
       }
-    </script>
+      @font-face {
+        font-family: "Space Grotesk";
+        src: url("./fonts/space-grotesk-variable.woff2")
+          format("woff2-variations");
+        font-weight: 300 700;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Space Mono";
+        src: url("./fonts/space-mono-400.woff2") format("woff2");
+        font-weight: 400;
+        font-display: swap;
+      }
+      :root {
+        --bg: #0d0c0a;
+        --ink: #f3ede0;
+        --muted: #a39a89;
+        --accent: #ff4a1c;
+        --accent-bright: #d7ff3d;
+        --surface: #1a1815;
+        --font-display: "Anton", sans-serif;
+        --font-body: "Space Grotesk", system-ui, sans-serif;
+        --font-mono: "Space Mono", monospace;
+      }
+      * {
+        box-sizing: border-box;
+        min-width: 0;
+      }
+      html,
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--font-body);
+      }
+      .keyboard-hero-spacer {
+        height: 175vh;
+        position: relative;
+      }
+      .keyboard-stage-fixed {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+      }
+      .keyboard-canvas-wrap {
+        position: fixed;
+        pointer-events: auto;
+        z-index: 1;
+      }
+      canvas.keyboard-canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+        touch-action: none;
+        cursor: pointer;
+      }
+      .keyboard-hero-copy {
+        position: fixed;
+        left: 50%;
+        top: 10%;
+        width: min(720px, 84vw);
+        transform: translateX(-50%);
+        text-align: center;
+        z-index: 2;
+        pointer-events: none;
+      }
+      .keyboard-hero-copy h1 {
+        font-family: var(--font-display);
+        font-weight: 400;
+        text-transform: uppercase;
+        font-size: clamp(38px, 7.5vw, 84px);
+        line-height: 0.98;
+        margin: 0 0 14px;
+        letter-spacing: 0.005em;
+      }
+      .keyboard-hero-copy p {
+        margin: 0;
+        color: var(--muted);
+        font: 13px var(--font-mono);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .keyboard-key-label {
+        position: fixed;
+        transform: translate(-50%, -140%);
+        background: var(--accent);
+        color: var(--bg);
+        font: 11px var(--font-mono);
+        letter-spacing: 0.08em;
+        padding: 5px 9px;
+        pointer-events: none;
+        white-space: nowrap;
+        z-index: 50;
+      }
+      .section {
+        padding: 12vh 8vw;
+        border-top: 1px solid #f3ede026;
+      }
+      .eyebrow {
+        display: block;
+        font: 11px var(--font-mono);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 18px;
+      }
+      .section h2 {
+        font-family: var(--font-display);
+        font-weight: 400;
+        text-transform: uppercase;
+        font-size: clamp(34px, 6vw, 68px);
+        line-height: 1;
+        margin: 0 0 20px;
+      }
+      .section > p {
+        color: var(--muted);
+        max-width: 560px;
+        line-height: 1.7;
+        font-size: 15px;
+      }
+      .section > p + p {
+        margin-top: 14px;
+      }
+
+      /* About: stat strip */
+      .stat-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        margin-top: 56px;
+        padding-top: 28px;
+        border-top: 1px solid #f3ede026;
+      }
+      .stat-strip div {
+        min-width: 140px;
+      }
+      .stat-strip strong {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 18px;
+        letter-spacing: 0.03em;
+        color: var(--ink);
+      }
+      .stat-strip span {
+        display: block;
+        font: 10px var(--font-mono);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-top: 6px;
+      }
+
+      /* Skills: grouped, no bars */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        gap: 40px;
+        margin-top: 12px;
+        max-width: 1100px;
+      }
+      .skills-grid h3 {
+        font: 11px var(--font-mono);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin: 0 0 16px;
+      }
+      .skills-grid ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .skills-grid li {
+        padding: 8px 0;
+        border-bottom: 1px solid #f3ede01a;
+        font-size: 14px;
+      }
+
+      /* Experience / archive: editorial index via <details> */
+      .exp-list {
+        margin-top: 12px;
+        max-width: 900px;
+      }
+      .exp-list details {
+        border-top: 1px solid #f3ede026;
+      }
+      .exp-list details:last-child {
+        border-bottom: 1px solid #f3ede026;
+      }
+      .exp-list summary {
+        list-style: none;
+        cursor: pointer;
+        display: grid;
+        grid-template-columns: 150px 1fr auto;
+        gap: 20px;
+        align-items: baseline;
+        padding: 18px 0;
+      }
+      .exp-list summary::-webkit-details-marker {
+        display: none;
+      }
+      .exp-date {
+        font: 10px var(--font-mono);
+        color: var(--muted);
+        letter-spacing: 0.05em;
+      }
+      .exp-role {
+        font-size: 17px;
+      }
+      .exp-role small {
+        display: block;
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 3px;
+      }
+      .exp-plus {
+        font-family: var(--font-mono);
+        color: var(--accent);
+      }
+      .exp-list details[open] .exp-plus {
+        color: var(--accent-bright);
+      }
+      .exp-body {
+        padding: 0 0 22px 170px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.8;
+        max-width: 600px;
+      }
+      .exp-body ul {
+        margin: 8px 0 0;
+        padding-left: 16px;
+      }
+
+      /* Archive: compact table */
+      .archive-table {
+        margin-top: 12px;
+        max-width: 1100px;
+        font-size: 13px;
+      }
+      .archive-row {
+        display: grid;
+        grid-template-columns: 50px 90px 1fr 1fr 1.4fr;
+        gap: 16px;
+        padding: 12px 0;
+        border-top: 1px solid #f3ede01a;
+        color: var(--muted);
+      }
+      .archive-row:first-child {
+        border-top: none;
+      }
+      .archive-row span:first-child {
+        font-family: var(--font-mono);
+        color: var(--accent);
+      }
+      .archive-row strong {
+        color: var(--ink);
+        font-weight: 400;
+      }
+
+      /* Work: simple project index (bespoke visuals come later) */
+      .work-list {
+        margin-top: 12px;
+        max-width: 900px;
+      }
+      .work-item {
+        border-top: 1px solid #f3ede026;
+        padding: 32px 0;
+      }
+      .work-item:last-child {
+        border-bottom: 1px solid #f3ede026;
+      }
+      .work-item .work-number {
+        font: 11px var(--font-mono);
+        color: var(--accent);
+        letter-spacing: 0.1em;
+      }
+      .work-item h3 {
+        font-family: var(--font-display);
+        font-weight: 400;
+        text-transform: uppercase;
+        font-size: clamp(26px, 4vw, 44px);
+        margin: 10px 0 6px;
+      }
+      .work-item .work-sub {
+        color: var(--muted);
+        font-size: 14px;
+        margin: 0 0 14px;
+      }
+      .work-item .work-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 14px;
+        font: 10px var(--font-mono);
+        letter-spacing: 0.06em;
+        color: var(--muted);
+      }
+      .work-item .work-stack span::before {
+        content: "// ";
+        color: var(--accent);
+      }
+
+      /* Philosophy */
+      .philosophy-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 40px;
+        margin-top: 12px;
+        max-width: 1100px;
+      }
+      .philosophy-grid h3 {
+        font-family: var(--font-display);
+        font-weight: 400;
+        text-transform: uppercase;
+        font-size: 24px;
+        margin: 0 0 10px;
+      }
+      .philosophy-grid p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+        max-width: 320px;
+      }
+
+      /* Contact / resume / links */
+      .contact-links,
+      .link-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px 40px;
+        margin-top: 32px;
+      }
+      .contact-links a,
+      .link-list a {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--ink);
+        text-decoration: none;
+        border-bottom: 1px solid var(--accent);
+        padding-bottom: 3px;
+      }
+      .contact-links a:hover,
+      .link-list a:hover {
+        color: var(--accent-bright);
+        border-color: var(--accent-bright);
+      }
+
+      /* Mobile: the brief is explicit that the keyboard must not stay
+         permanently pinned there (too much space) — so instead of fixed
+         position + scroll-driven shrink, it's absolutely positioned within
+         the (now shorter) hero spacer and scrolls away with the page like
+         ordinary hero content. */
+      /* Mobile: the brief is explicit the keyboard must not stay
+         permanently pinned (too much space) — but the earlier fix just
+         reused the desktop's absolute-position pixel math unchanged,
+         which left a huge dead gap between the headline and the keyboard
+         and gave it no real relationship to the rest of the layout. This
+         is a proper flow layout instead: a centered column, sized and
+         spaced on its own terms, that simply scrolls away with the page. */
+      @media (max-width: 860px) {
+        .keyboard-hero-spacer {
+          height: auto;
+          min-height: 100svh;
+        }
+        .keyboard-stage-fixed {
+          position: static;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 5vh;
+          min-height: 100svh;
+          padding: 9vh 20px 6vh;
+          pointer-events: auto;
+        }
+        .keyboard-hero-copy,
+        .keyboard-canvas-wrap {
+          position: static;
+          opacity: 1 !important;
+          transform: none !important;
+        }
+        .keyboard-canvas-wrap {
+          width: min(820px, 98vw);
+          height: min(560px, 92vw);
+        }
+      }
+      .keyboard-scroll-cue {
+        display: none;
+        align-items: center;
+        flex-direction: column;
+        gap: 8px;
+        color: var(--muted);
+        font: 10px var(--font-mono);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .keyboard-scroll-cue span:first-child {
+        width: 26px;
+        height: 34px;
+        border: 1px solid var(--muted);
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        color: var(--accent);
+      }
+      @media (max-width: 860px) {
+        .keyboard-scroll-cue {
+          display: flex;
+        }
+      }
+      @media (max-width: 700px) {
+        .section {
+          padding: 10vh 22px;
+        }
+        .exp-list summary {
+          grid-template-columns: 1fr auto;
+          row-gap: 4px;
+        }
+        .exp-date {
+          grid-column: 1 / -1;
+        }
+        .exp-body {
+          padding-left: 0;
+        }
+        .archive-row {
+          grid-template-columns: 1fr;
+          gap: 4px;
+          padding: 16px 0;
+        }
+        .archive-row span:first-child {
+          display: none;
+        }
+        .skills-grid,
+        .philosophy-grid {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+      }
+      #status {
+        position: fixed;
+        bottom: 8px;
+        left: 8px;
+        font: 11px var(--font-mono);
+        color: var(--muted);
+        z-index: 60;
+      }
+    </style>
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header">
-      <a class="wordmark" href="#about" aria-label="degydev — back to top"
-        ><span class="brand-mark" aria-hidden="true">d<span>.</span></span
-        >degydev<span class="wordmark-dot">/</span></a
-      >
-      <button
-        class="menu-toggle"
-        aria-controls="navigation"
-        aria-expanded="false"
-        hidden
-      >
-        Menu <span aria-hidden="true">+</span>
-      </button>
-      <nav id="navigation" aria-label="Main navigation">
-        <a href="#work">Selected work</a><a href="#experience">Experience</a
-        ><a href="#systems">Expertise</a>
-        <a class="nav-contact" href="#contact"
-          >Let’s talk <span aria-hidden="true">↗</span></a
-        >
-      </nav>
-      <div class="reading-progress" aria-hidden="true"></div>
-    </header>
-    <main id="main">
-      <section
-        class="hero section-shell"
-        id="about"
-        aria-labelledby="hero-title"
-      >
-        <div class="hero-topline">
-          <span class="eyebrow"
-            ><span class="status-dot"></span> Munkhdelger Tumenbayar</span
-          ><span class="mono hero-location"
-            >Ulaanbaatar, Mongolia <span aria-hidden="true">↗</span></span
-          >
+    <div id="status">loading…</div>
+
+    <div class="keyboard-hero-spacer" id="hero-spacer">
+      <div class="keyboard-stage-fixed" id="stage-fixed">
+        <div class="keyboard-hero-copy" id="hero-copy">
+          <h1>I build systems that people actually have to use.</h1>
+          <p id="hero-hint">Type a letter. Hold A S D F G / Z X C V B to navigate.</p>
         </div>
-        <div class="hero-grid">
-          <div class="hero-copy">
-            <p class="hero-role">
-              Senior Full-Stack Engineer <span>/</span> Architect
-              <span>/</span> Technical Lead
-            </p>
-            <h1 id="hero-title">
-              I build systems<br />that people<br /><em>depend on.</em>
-            </h1>
-            <p class="hero-description">
-              Nearly a decade turning complex problems into production software.
-              From national public services to fintech infrastructure.
-            </p>
-            <div class="hero-actions">
-              <a class="button button-primary" href="#work"
-                >Explore my work <span aria-hidden="true">↘</span></a
-              ><a
-                class="text-link"
-                href="https://github.com/degydev"
-                target="_blank"
-                rel="noopener noreferrer"
-                >GitHub <span aria-hidden="true">↗</span></a
-              >
-            </div>
-          </div>
-          <figure class="architecture" aria-labelledby="architecture-caption">
-            <div class="architecture-heading mono">
-              <span>FIG. 01 / SYSTEMS IN MOTION</span
-              ><span class="architecture-coordinate" aria-hidden="true"
-                >X 00 / Y 00</span
-              >
-            </div>
-            <div class="architecture-stage">
-              <svg
-                class="system-model"
-                viewBox="0 0 600 530"
-                role="img"
-                aria-labelledby="model-title model-description"
-              >
-                <title id="model-title">
-                  An interconnected software system
-                </title>
-                <desc id="model-description">
-                  An exploded isometric structure connects frontend and mobile
-                  interfaces through APIs and security to backend services,
-                  messaging, databases and infrastructure. Select a layer below
-                  to explore.
-                </desc>
-                <defs>
-                  <pattern
-                    id="grid"
-                    width="36"
-                    height="21"
-                    patternUnits="userSpaceOnUse"
-                    patternTransform="matrix(1 .56 -1 .56 300 320)"
-                  >
-                    <path
-                      d="M36 0H0V21"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width=".7"
-                    />
-                  </pattern>
-                </defs>
-                <g class="model-grid">
-                  <ellipse
-                    cx="300"
-                    cy="417"
-                    rx="280"
-                    ry="102"
-                    fill="url(#grid)"
-                  />
-                  <path d="M24 372L300 526L576 372M300 526V488" />
-                </g>
-                <g class="model-spine">
-                  <path d="M116 202V378M300 97V469M484 202V378M300 307V469" />
-                  <path class="signal" d="M116 202V378L300 481L484 378V202" />
-                </g>
-                <g class="model-layer" data-layer="data">
-                  <path
-                    class="slab-side"
-                    d="M100 354L300 242L500 354V368L300 480L100 368Z"
-                  />
-                  <path
-                    class="slab-top"
-                    d="M100 354L300 242L500 354L300 466Z"
-                  />
-                  <path
-                    class="circuit"
-                    d="M142 354L300 442L458 354L300 266ZM210 316L390 418M210 418L390 316"
-                  />
-                  <g class="chip">
-                    <path d="M228 342L300 301L372 342V363L300 404L228 363Z" />
-                    <path
-                      class="chip-top"
-                      d="M228 342L300 301L372 342L300 383Z"
-                    />
-                    <path d="M300 383V404" />
-                  </g>
-                  <path
-                    class="chip-glyph"
-                    d="M279 339L300 327L321 339L300 351ZM279 348L300 360L321 348M279 357L300 369L321 357"
-                  />
-                  <text x="157" y="364" transform="rotate(29 157 364)">
-                    SQL / REDIS
-                  </text>
-                  <text x="369" y="406" transform="rotate(-29 369 406)">
-                    INFRA
-                  </text>
-                  <circle class="port" cx="143" cy="354" r="4" />
-                  <circle class="port" cx="456" cy="354" r="4" />
-                </g>
-                <g class="model-layer" data-layer="backend">
-                  <path
-                    class="slab-side"
-                    d="M100 266L300 154L500 266V280L300 392L100 280Z"
-                  />
-                  <path
-                    class="slab-top"
-                    d="M100 266L300 154L500 266L300 378Z"
-                  />
-                  <path
-                    class="circuit"
-                    d="M141 266L300 355L459 266L300 177ZM180 245L300 312L420 245M300 177V214"
-                  />
-                  <g class="chip">
-                    <path d="M224 243L300 200L376 243V267L300 310L224 267Z" />
-                    <path
-                      class="chip-top"
-                      d="M224 243L300 200L376 243L300 286Z"
-                    />
-                    <path d="M300 286V310" />
-                  </g>
-                  <path
-                    class="chip-glyph"
-                    d="M271 244L286 235M271 244L286 253M329 244L314 235M329 244L314 253M305 232L295 256"
-                  />
-                  <text x="151" y="277" transform="rotate(29 151 277)">
-                    SERVICES
-                  </text>
-                  <text x="366" y="321" transform="rotate(-29 366 321)">
-                    MESSAGING
-                  </text>
-                  <circle class="port" cx="141" cy="266" r="4" />
-                  <circle class="port" cx="459" cy="266" r="4" />
-                </g>
-                <g class="model-layer" data-layer="interface">
-                  <path
-                    class="slab-side"
-                    d="M100 174L300 62L500 174V188L300 300L100 188Z"
-                  />
-                  <path class="slab-top" d="M100 174L300 62L500 174L300 286Z" />
-                  <path
-                    class="circuit"
-                    d="M140 174L300 264L460 174L300 84ZM204 210L300 156L396 210"
-                  />
-                  <g class="chip">
-                    <path d="M204 144L278 103L355 146V166L281 207L204 164Z" />
-                    <path
-                      class="chip-top"
-                      d="M204 144L278 103L355 146L281 187Z"
-                    />
-                    <path d="M281 187V207" />
-                  </g>
-                  <path
-                    class="chip-glyph"
-                    d="M244 139L278 120L315 141L281 160ZM249 143L285 123M260 155L275 164"
-                  />
-                  <text x="155" y="187" transform="rotate(29 155 187)">
-                    FRONTEND
-                  </text>
-                  <text x="369" y="228" transform="rotate(-29 369 228)">
-                    MOBILE
-                  </text>
-                  <circle class="port" cx="140" cy="174" r="4" />
-                  <circle class="port" cx="460" cy="174" r="4" />
-                </g>
-                <g class="model-annotations">
-                  <path
-                    d="M472 166H532V149H560M484 269H540M481 365H526V383H560"
-                  />
-                  <text x="536" y="138">01</text>
-                  <text x="545" y="273">02</text>
-                  <text x="536" y="403">03</text>
-                  <text x="25" y="292">API</text>
-                  <path d="M53 287H81V230H100" />
-                  <text x="24" y="313">SECURITY</text>
-                </g>
-              </svg>
-            </div>
-            <figcaption id="architecture-caption">
-              <div
-                class="layer-controls"
-                hidden
-                aria-label="Explore architecture layers"
-              >
-                <button
-                  type="button"
-                  data-select-layer="interface"
-                  aria-pressed="true"
-                >
-                  01 Interface</button
-                ><button
-                  type="button"
-                  data-select-layer="backend"
-                  aria-pressed="false"
-                >
-                  02 Logic</button
-                ><button
-                  type="button"
-                  data-select-layer="data"
-                  aria-pressed="false"
-                >
-                  03 Foundation
-                </button>
-              </div>
-              <p class="layer-description">
-                The experience people touch. React, Angular & mobile
-                collaboration.
-              </p>
-            </figcaption>
-          </figure>
+        <div class="keyboard-canvas-wrap" id="canvas-wrap">
+          <canvas class="keyboard-canvas" id="stage"></canvas>
         </div>
-        <div class="hero-bottom">
-          <a href="#work" class="scroll-cue"
-            ><span aria-hidden="true">↓</span
-            ><span class="mono">SCROLL TO EXPLORE</span></a
-          >
-          <p>Built around problems.<br /><span>Driven by solutions.</span></p>
-          <span class="mono edition"
-            >INDEPENDENT THINKING. CONNECTED SYSTEMS.</span
-          >
+        <div class="keyboard-scroll-cue">
+          <span aria-hidden="true">↓</span><span>Scroll to explore</span>
         </div>
-      </section>
-      <div class="domain-strip section-shell" aria-label="Areas of experience">
-        <span class="mono">REAL-WORLD SYSTEMS</span><span>Fintech</span
-        ><span class="strip-plus" aria-hidden="true">+</span
-        ><span>Public infrastructure</span
-        ><span class="strip-plus" aria-hidden="true">+</span
-        ><span>Product engineering</span>
       </div>
-      <section
-        class="work section-shell section-space"
-        id="work"
-        aria-labelledby="work-title"
-      >
-        <div class="section-heading reveal">
-          <p class="eyebrow">
-            <span class="section-index">01 /</span> Selected work
-          </p>
-          <div>
-            <h2 id="work-title">
-              Complex underneath.<br /><span class="muted"
-                >Clear on the surface.</span
-              >
-            </h2>
-            <p>
-              Different domains. The same responsibility:<br />make the whole
-              system work.
-            </p>
-          </div>
+    </div>
+
+    <section class="section" id="about">
+      <span class="eyebrow">The person behind the specimen</span>
+      <h2>I build systems that people actually have to use.</h2>
+      <p>
+        I'm a senior full-stack engineer based in Mongolia, working across
+        financial technology, public systems, mobile applications and
+        experimental products.
+      </p>
+      <p>
+        My work is usually somewhere between product engineering, system
+        architecture and turning complicated workflows into something
+        simpler.
+      </p>
+      <div class="stat-strip">
+        <div><strong>~10 YEARS</strong><span>Software engineering</span></div>
+        <div><strong>FINTECH</strong><span>Current focus</span></div>
+        <div><strong>WEB · MOBILE · BACKEND</strong><span>Primary platforms</span></div>
+        <div><strong>MONGOLIA</strong><span>Based in</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <span class="eyebrow">How I use what I know</span>
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div>
+          <h3>Systems</h3>
+          <ul>
+            <li>Java</li>
+            <li>Spring Boot</li>
+            <li>REST APIs</li>
+            <li>Messaging</li>
+            <li>Microservices</li>
+            <li>Authentication</li>
+            <li>Distributed workflows</li>
+          </ul>
         </div>
-        <article class="case-study case-fintech reveal">
-          <div class="case-copy">
-            <p class="eyebrow">FINTECH / ASHID CAPITAL</p>
-            <h3>Financial systems.<br />Human decisions.</h3>
-            <p class="case-intro">
-              Simple.mn, credit scoring and collateral lending — connected parts
-              of a financial product, each with its own engineering demands.
-            </p>
-            <dl class="case-facts">
-              <div>
-                <dt>The problem</dt>
-                <dd>
-                  Turn financial workflows into dependable, usable software.
-                </dd>
-              </div>
-              <div>
-                <dt>My contribution</dt>
-                <dd>
-                  Led credit-scoring development, built collateral-loan
-                  functionality and contributed to Simple.mn. Guided teams of
-                  3–7 developers.
-                </dd>
-              </div>
-            </dl>
-            <p class="stack-line">Java / Spring Boot / React / Oracle</p>
-            <button class="text-link case-open" data-case="fintech" hidden>
-              Explore the system <span aria-hidden="true">↗</span>
-            </button>
+        <div>
+          <h3>Interface</h3>
+          <ul>
+            <li>Angular</li>
+            <li>React</li>
+            <li>Flutter</li>
+            <li>SSR</li>
+            <li>Interactive UI</li>
+            <li>WebGPU experiments</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Data</h3>
+          <ul>
+            <li>Oracle</li>
+            <li>MariaDB</li>
+            <li>MySQL</li>
+            <li>Redis</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Infrastructure</h3>
+          <ul>
+            <li>Docker</li>
+            <li>Nginx</li>
+            <li>CI/CD</li>
+            <li>Linux</li>
+            <li>Cloud deployments</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Product engineering</h3>
+          <ul>
+            <li>Fintech</li>
+            <li>Loan systems</li>
+            <li>Payment integrations</li>
+            <li>Government integrations</li>
+            <li>Workflow design</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="experience">
+      <span class="eyebrow">The trajectory</span>
+      <h2>Experience</h2>
+      <div class="exp-list">
+        <details open>
+          <summary>
+            <span class="exp-date">MAR 2023 — NOW</span>
+            <span class="exp-role"
+              >Senior Full-Stack Engineer<small
+                >Ashid Capital LLC — Simple</small
+              ></span
+            >
+            <span class="exp-plus">+</span>
+          </summary>
+          <div class="exp-body">
+            Architecture, component design and technical direction across
+            frontend, mobile and backend. Led teams of 3–7 developers on
+            Simple's lending, scoring and collateral systems.
+            <ul>
+              <li>Led credit-scoring system development.</li>
+              <li>Built collateral-loan management functionality.</li>
+              <li>Contributed to the Simple.mn platform.</li>
+            </ul>
           </div>
-          <div
-            class="case-visual lending-visual"
-            aria-label="Conceptual lending workflow: application, credit assessment, decision and loan management"
-          >
-            <div class="visual-topline mono">
-              <span>THE LENDING LIFECYCLE</span><span>01—04</span>
-            </div>
-            <div class="lending-flow">
-              <div class="flow-step">
-                <span class="flow-number">01</span>
-                <div>
-                  <span class="mono">INPUT</span><strong>Application</strong>
-                </div>
-                <span aria-hidden="true">↘</span>
-              </div>
-              <div class="flow-step flow-featured">
-                <span class="flow-number">02</span>
-                <div>
-                  <span class="mono">ASSESS</span
-                  ><strong>Credit intelligence</strong
-                  ><small>Data → scoring → decision</small>
-                </div>
-                <span class="flow-symbol" aria-hidden="true">✳</span>
-              </div>
-              <div class="flow-step">
-                <span class="flow-number">03</span>
-                <div>
-                  <span class="mono">DECIDE</span
-                  ><strong>Lending workflow</strong>
-                </div>
-                <span aria-hidden="true">↘</span>
-              </div>
-              <div class="flow-step">
-                <span class="flow-number">04</span>
-                <div>
-                  <span class="mono">MANAGE</span
-                  ><strong>Loans & collateral</strong>
-                </div>
-                <span aria-hidden="true">↗</span>
-              </div>
-            </div>
-            <p class="visual-caption mono">
-              SIMPLIFIED DOMAIN VIEW / NOT INTERNAL ARCHITECTURE
-            </p>
+        </details>
+        <details>
+          <summary>
+            <span class="exp-date">MAR 2023 — NOW · PARALLEL</span>
+            <span class="exp-role"
+              >Independent Full-Stack Engineering<small
+                >Freelance / contract</small
+              ></span
+            >
+            <span class="exp-plus">+</span>
+          </summary>
+          <div class="exp-body">
+            Requirements through architecture, implementation and
+            deployment for outside clients — security, maintainability and
+            documented handoffs.
+          </div>
+        </details>
+        <details>
+          <summary>
+            <span class="exp-date">DEC 2019 — MAR 2023</span>
+            <span class="exp-role"
+              >Full-Stack Developer<small
+                >Information Technology Center of Customs, Taxation and
+                Finance</small
+              ></span
+            >
+            <span class="exp-plus">+</span>
+          </summary>
+          <div class="exp-body">
+            Built software across Mongolia's public digital-service
+            ecosystem.
+            <ul>
+              <li>ehalamj.mn — React, Material UI, Spring Boot.</li>
+              <li>ebarimt.mn and 1072 shares web sites and request module.</li>
+              <li>UB Smart Card and COVID support-aid integrations.</li>
+            </ul>
+          </div>
+        </details>
+        <details>
+          <summary>
+            <span class="exp-date">SEP 2019 — NOV 2019</span>
+            <span class="exp-role"
+              >Full-Stack Developer<small>Mongolian Properties</small></span
+            >
+            <span class="exp-plus">+</span>
+          </summary>
+          <div class="exp-body">
+            Built Avy.mn, an online asset marketplace, on Symfony with AWS.
+          </div>
+        </details>
+        <details>
+          <summary>
+            <span class="exp-date">MAY 2017 — MAR 2019</span>
+            <span class="exp-role"
+              >Full-Stack Developer<small>Ritus LLC</small></span
+            >
+            <span class="exp-plus">+</span>
+          </summary>
+          <div class="exp-body">
+            Built a private CRM/HRM system in PHP, a DISC personality
+            assessment tool, and a Delphi/Chromium integration.
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="section" id="work">
+      <span class="eyebrow">Selected systems / 01—05</span>
+      <h2>Selected Work</h2>
+      <p>
+        Engineering case studies. Custom visual treatment for each is the
+        next pass — real facts, compact layout for now.
+      </p>
+      <div class="work-list">
+        <article class="work-item">
+          <span class="work-number">01 / Simple</span>
+          <h3>Simple.</h3>
+          <p class="work-sub">
+            Digital lending and financial services platform — Senior
+            Full-Stack Engineer. Lending journeys, repayments, scoring-related
+            flows, payment integrations, notifications, authentication and
+            major application releases.
+          </p>
+          <div class="work-stack">
+            <span>Java</span><span>Spring</span><span>Angular</span
+            ><span>Flutter</span><span>Oracle</span><span>Redis</span
+            ><span>ActiveMQ</span>
           </div>
         </article>
-        <article class="case-study case-welfare reveal">
-          <div class="case-copy">
-            <p class="eyebrow">PUBLIC SERVICES / 2020–2023</p>
-            <h3>Less paperwork.<br />More public service.</h3>
-            <p class="case-intro">
-              ehalamj.mn connects welfare services with existing government-held
-              citizen information, reducing the need for paper documents.
-            </p>
-            <dl class="case-facts">
-              <div>
-                <dt>The problem</dt>
-                <dd>
-                  Make welfare and pension services accessible through digital
-                  workflows.
-                </dd>
-              </div>
-              <div>
-                <dt>My contribution</dt>
-                <dd>
-                  Built full-stack functionality using React, Material UI and
-                  Spring Boot as part of the public-service engineering team.
-                </dd>
-              </div>
-            </dl>
-            <p class="stack-line">React / Material UI / Spring Boot / SQL</p>
-            <button class="text-link case-open" data-case="welfare" hidden>
-              Explore the system <span aria-hidden="true">↗</span>
-            </button>
-          </div>
-          <div
-            class="case-visual welfare-visual"
-            aria-label="Conceptual welfare service map connecting people, welfare services and government information"
-          >
-            <div class="visual-topline mono">
-              <span>CONNECTED PUBLIC SERVICES</span><span>MN</span>
-            </div>
-            <div class="public-map">
-              <div class="map-orbit orbit-one"></div>
-              <div class="map-orbit orbit-two"></div>
-              <div class="public-core">
-                <span class="public-symbol" aria-hidden="true">↗</span
-                ><strong>ehalamj<span>.mn</span></strong
-                ><span class="mono">WELFARE SERVICES</span>
-              </div>
-              <span class="map-endpoint endpoint-one">People</span
-              ><span class="map-endpoint endpoint-two">Citizen information</span
-              ><span class="map-endpoint endpoint-three"
-                >Pensions & support</span
-              ><span class="map-endpoint endpoint-four">Digital requests</span>
-            </div>
-            <p class="visual-caption mono">
-              FEWER DOCUMENTS. BETTER CONNECTIONS.
-            </p>
+        <article class="work-item">
+          <span class="work-number">02 / Welfare</span>
+          <h3>Welfare.</h3>
+          <p class="work-sub">
+            Digital public-service infrastructure — moved welfare and
+            pension-related workflows from paper-heavy processes into
+            digital services. System design, backend workflows, government
+            integrations, multi-role processes, reliability.
+          </p>
+          <div class="work-stack">
+            <span>React</span><span>Material UI</span><span>Spring Boot</span
+            ><span>Oracle</span>
           </div>
         </article>
-        <div class="compact-projects reveal">
-          <article>
-            <span class="mono project-number">03 / PUBLIC INFRASTRUCTURE</span>
-            <h3>One ecosystem.<br />Many connections.</h3>
-            <p>
-              Contributed to eBarimt, QR receipt registration, 1072 Erdenes
-              Tavan Tolgoi share integrations, support-aid requests and UB Smart
-              Card integration.
-            </p>
-            <button class="text-link case-open" data-case="integrations" hidden>
-              Inside the integrations <span aria-hidden="true">↗</span>
-            </button>
-          </article>
-          <article>
-            <span class="mono project-number"
-              >04 / INDEPENDENT ENGINEERING</span
-            >
-            <h3>From a requirement<br />to a running system.</h3>
-            <p>
-              Contract full-stack development: shaping requirements, building
-              production software, and leaving clear documentation for the next
-              engineer.
-            </p>
-            <a class="text-link" href="#contact"
-              >Discuss your system <span aria-hidden="true">↗</span></a
-            >
-          </article>
-        </div>
-      </section>
-      <section
-        class="experience section-space"
-        id="experience"
-        aria-labelledby="experience-title"
-      >
-        <div class="section-shell">
-          <div class="section-heading reveal">
-            <p class="eyebrow">
-              <span class="section-index">02 /</span> The trajectory
-            </p>
-            <div>
-              <h2 id="experience-title">
-                More than a stack.<br /><span class="muted"
-                  >A growing scope.</span
-                >
-              </h2>
-              <p>
-                From shipping features to shaping systems<br />and helping teams
-                deliver them.
-              </p>
-            </div>
-          </div>
-          <div class="career-track reveal" aria-label="Career progression">
-            <a href="#role-ritus"
-              ><span class="mono">2017</span><span class="track-node"></span
-              ><strong>Build</strong><small>Business software</small></a
-            ><a href="#role-properties"
-              ><span class="mono">2019</span><span class="track-node"></span
-              ><strong>Connect</strong><small>Full-stack products</small></a
-            ><a href="#role-public"
-              ><span class="mono">2019–2023</span
-              ><span class="track-node"></span><strong>Scale the scope</strong
-              ><small>National platforms</small></a
-            ><a href="#role-ashid"
-              ><span class="mono">2023–PRESENT</span
-              ><span class="track-node"></span><strong>Lead & architect</strong
-              ><small>Fintech systems</small></a
-            >
-          </div>
-          <div class="career-roles reveal">
-            <details id="role-ashid" open>
-              <summary>
-                <span class="role-date mono">FEB 2023 — PRESENT</span
-                ><span class="role-title"
-                  >Senior Full-Stack Engineer<small
-                    >Ashid Capital LLC</small
-                  ></span
-                ><span class="detail-plus" aria-hidden="true">+</span>
-              </summary>
-              <div class="role-body">
-                <p>
-                  Architecture, component design and technical direction across
-                  frontend, mobile and backend development. Led teams of 3–7
-                  developers working on financial software.
-                </p>
-                <ul>
-                  <li>Led the development of credit-scoring systems.</li>
-                  <li>Built collateral-loan management functionality.</li>
-                  <li>Contributed to the Simple.mn platform.</li>
-                </ul>
-              </div>
-            </details>
-            <details id="role-public">
-              <summary>
-                <span class="role-date mono">NOV 2019 — FEB 2023</span
-                ><span class="role-title"
-                  >Full-Stack Developer<small
-                    >Information Technology Center of Customs, Taxation and
-                    Finance</small
-                  ></span
-                ><span class="detail-plus" aria-hidden="true">+</span>
-              </summary>
-              <div class="role-body">
-                <p>
-                  Built software across Mongolia’s public digital-service
-                  ecosystem, including ehalamj.mn and parts of ebarimt.mn.
-                </p>
-                <ul>
-                  <li>
-                    React and Spring Boot development for welfare services.
-                  </li>
-                  <li>1072 share websites and request-module development.</li>
-                  <li>
-                    Receipt, support-aid and transport-system integrations.
-                  </li>
-                </ul>
-              </div>
-            </details>
-            <details id="role-properties">
-              <summary>
-                <span class="role-date mono">AUG — OCT 2019</span
-                ><span class="role-title"
-                  >Full-Stack Developer<small>Mongolian Properties</small></span
-                ><span class="detail-plus" aria-hidden="true">+</span>
-              </summary>
-              <div class="role-body">
-                <p>
-                  Built Avy.mn, an online asset marketplace using Symfony and
-                  AWS. Connected product interfaces with server-side business
-                  functionality.
-                </p>
-              </div>
-            </details>
-            <details id="role-ritus">
-              <summary>
-                <span class="role-date mono">MAY 2017 — MAR 2019</span
-                ><span class="role-title"
-                  >Full-Stack Developer<small>Ritus LLC</small></span
-                ><span class="detail-plus" aria-hidden="true">+</span>
-              </summary>
-              <div class="role-body">
-                <p>
-                  Built private CRM and HRM systems in PHP, a DISC
-                  personality-assessment system, and Delphi/Chromium
-                  integration. A foundation in solving business problems across
-                  different technologies.
-                </p>
-              </div>
-            </details>
-            <details id="role-freelance">
-              <summary>
-                <span class="role-date mono">FEB 2023 — PRESENT · PARALLEL</span
-                ><span class="role-title"
-                  >Independent Full-Stack Engineering<small
-                    >Freelance / contract</small
-                  ></span
-                ><span class="detail-plus" aria-hidden="true">+</span>
-              </summary>
-              <div class="role-body">
-                <p>
-                  Work with clients from requirements and architecture through
-                  implementation and deployment. Emphasis on security,
-                  maintainable code, documentation and a smooth handoff.
-                </p>
-              </div>
-            </details>
-          </div>
-          <div class="education">
-            <span class="eyebrow">The foundation</span>
-            <p>
-              <strong>Mongolian University of Science and Technology</strong
-              ><span
-                >MSc, Computer Science · 2017–2022
-                <span aria-hidden="true">/</span> BSc, Computer Science ·
-                2013–2017</span
-              >
-            </p>
-            <a
-              class="text-link"
-              href="https://gitconnected.com/degydev/resume"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Full CV <span aria-hidden="true">↗</span></a
-            >
-          </div>
-        </div>
-      </section>
-      <section
-        class="expertise section-shell section-space"
-        id="systems"
-        aria-labelledby="systems-title"
-      >
-        <div class="section-heading reveal">
-          <p class="eyebrow">
-            <span class="section-index">03 /</span> How I think
+        <article class="work-item">
+          <span class="work-number">03 / GMMS</span>
+          <h3>GMMS.</h3>
+          <p class="work-sub">
+            Grant lifecycle management for environmental programmes —
+            application, review, evaluation, contract, payment, award.
+            Scoring, grievances, serious incident reporting, surveys,
+            multilingual UI.
           </p>
-          <div>
-            <h2 id="systems-title">
-              The connections<br /><span class="muted">are the expertise.</span>
-            </h2>
-            <p>A technology is a tool.<br />The system is the work.</p>
-          </div>
-        </div>
-        <div class="expertise-grid reveal">
-          <div class="system-selector" aria-label="Engineering disciplines">
-            <div class="selector-core">
-              <span class="brand-mark" aria-hidden="true">d<span>.</span></span>
-              <div>One system.<small>Every layer considered.</small></div>
-            </div>
-            <div class="system-options" hidden>
-              <button data-skill="backend" aria-pressed="true">
-                <span class="mono">01</span> Backend
-                <span aria-hidden="true">↗</span></button
-              ><button data-skill="frontend" aria-pressed="false">
-                <span class="mono">02</span> Frontend
-                <span aria-hidden="true">↗</span></button
-              ><button data-skill="data" aria-pressed="false">
-                <span class="mono">03</span> Data
-                <span aria-hidden="true">↗</span></button
-              ><button data-skill="infrastructure" aria-pressed="false">
-                <span class="mono">04</span> Infrastructure
-                <span aria-hidden="true">↗</span></button
-              ><button data-skill="engineering" aria-pressed="false">
-                <span class="mono">05</span> Engineering
-                <span aria-hidden="true">↗</span>
-              </button>
-            </div>
-          </div>
-          <div class="skill-panels">
-            <article id="skill-backend" class="skill-panel">
-              <p class="eyebrow">01 / Backend</p>
-              <h3>The logic behind<br />the experience.</h3>
-              <p>
-                Services that connect business rules, data and the interfaces
-                people use.
-              </p>
-              <ul class="skill-list">
-                <li>Java</li>
-                <li>Spring Boot</li>
-                <li>Node.js</li>
-                <li>REST APIs</li>
-                <li>Security</li>
-                <li>Messaging</li>
-              </ul>
-              <div class="skill-context">
-                <span class="mono">IN PRACTICE</span>
-                <p>
-                  Spring Boot across ehalamj.mn and fintech development.
-                  Credit-scoring and collateral-management systems at Ashid
-                  Capital.
-                </p>
-              </div>
-            </article>
-            <article id="skill-frontend" class="skill-panel">
-              <p class="eyebrow">02 / Frontend</p>
-              <h3>Complex workflows.<br />Usable interfaces.</h3>
-              <p>
-                Translate system capabilities into components and workflows that
-                make sense to the people using them.
-              </p>
-              <ul class="skill-list">
-                <li>Angular</li>
-                <li>React</li>
-                <li>TypeScript</li>
-                <li>JavaScript</li>
-                <li>HTML / CSS</li>
-                <li>Material UI</li>
-              </ul>
-              <div class="skill-context">
-                <span class="mono">IN PRACTICE</span>
-                <p>
-                  React and Material UI on ehalamj.mn. Frontend component design
-                  and coordination with mobile developers at Ashid Capital.
-                </p>
-              </div>
-            </article>
-            <article id="skill-data" class="skill-panel">
-              <p class="eyebrow">03 / Data</p>
-              <h3>A system is only as<br />good as its foundations.</h3>
-              <p>
-                Relational data, queries and caching as connected parts of
-                application design.
-              </p>
-              <ul class="skill-list">
-                <li>Oracle</li>
-                <li>Oracle APEX</li>
-                <li>SQL</li>
-                <li>MariaDB / MySQL</li>
-                <li>Redis</li>
-              </ul>
-              <div class="skill-context">
-                <span class="mono">IN PRACTICE</span>
-                <p>
-                  Oracle and APEX in fintech work. SQL across welfare, receipt
-                  and public-service integration projects.
-                </p>
-              </div>
-            </article>
-            <article id="skill-infrastructure" class="skill-panel">
-              <p class="eyebrow">04 / Infrastructure</p>
-              <h3>It needs to work<br />outside localhost.</h3>
-              <p>
-                Take applications through deployment with attention to
-                configuration, operation and maintainability.
-              </p>
-              <ul class="skill-list">
-                <li>Docker</li>
-                <li>Cloud tooling</li>
-                <li>AWS</li>
-                <li>Deployment</li>
-              </ul>
-              <div class="skill-context">
-                <span class="mono">IN PRACTICE</span>
-                <p>
-                  Symfony and AWS for Avy.mn. Architecture-to-deployment
-                  ownership in contract development.
-                </p>
-              </div>
-            </article>
-            <article id="skill-engineering" class="skill-panel">
-              <p class="eyebrow">05 / Engineering</p>
-              <h3>Own the decisions.<br />Support the people.</h3>
-              <p>
-                Connect requirements, architecture and implementation. Give
-                developers a clear direction and room to do good work.
-              </p>
-              <ul class="skill-list">
-                <li>System design</li>
-                <li>Architecture</li>
-                <li>Technical leadership</li>
-                <li>Integration</li>
-                <li>Maintainability</li>
-              </ul>
-              <div class="skill-context">
-                <span class="mono">IN PRACTICE</span>
-                <p>
-                  Led teams of 3–7 developers at Ashid Capital. Coordinated
-                  frontend and mobile work alongside backend engineering.
-                </p>
-              </div>
-            </article>
-          </div>
-        </div>
-        <div class="ownership reveal">
-          <p class="eyebrow">Beyond the implementation</p>
-          <h3>Good architecture also<br />gives people <em>clarity.</em></h3>
-          <div class="ownership-points">
-            <p>
-              <strong>Set the direction.</strong>Translate requirements into
-              components, responsibilities and a system the team can reason
-              about.
-            </p>
-            <p>
-              <strong>Connect the disciplines.</strong>Bring frontend, mobile
-              and backend development into the same conversation.
-            </p>
-            <p>
-              <strong>Leave it maintainable.</strong>Deliver code, documentation
-              and a handoff that make the next change easier.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section
-        class="contact section-shell section-space"
-        id="contact"
-        aria-labelledby="contact-title"
-      >
-        <div class="contact-top">
-          <p class="eyebrow">
-            <span class="section-index">04 /</span> The next connection
+        </article>
+        <article class="work-item">
+          <span class="work-number">04 / PlateWatch</span>
+          <h3>PlateWatch.</h3>
+          <p class="work-sub">
+            Mobile-first vehicle sighting and plate-recognition experiment.
+            Mobile scans, web finds — camera detection through OCR,
+            normalization, and a searchable event.
           </p>
-          <span class="connection-mark" aria-hidden="true">↗</span>
-        </div>
-        <h2 id="contact-title">
-          Have a hard problem?<br /><em>Let’s build the answer.</em>
-        </h2>
-        <div class="contact-bottom">
-          <p>
-            A product to shape. A system to untangle.<br />A team that needs
-            technical direction.<br /><span>That’s a good place to start.</span>
+        </article>
+        <article class="work-item">
+          <span class="work-number">05 / Experiments</span>
+          <h3>Experiments.</h3>
+          <p class="work-sub">
+            Things built because ordinary interfaces are boring — WebGPU
+            material studies (this keyboard included), LAN games, browser
+            FPS experiments, interactive simulations.
           </p>
-          <div class="email-actions">
-            <a class="contact-email" href="mailto:munkhdelger95@gmail.com"
-              >munkhdelger95@gmail.com <span aria-hidden="true">↗</span></a
-            ><button class="copy-email mono" hidden>
-              Copy email <span aria-hidden="true">⧉</span></button
-            ><span class="copy-status sr-only" role="status"></span>
-          </div>
-        </div>
-        <div class="contact-links">
-          <a
-            href="https://www.linkedin.com/in/degydev/"
-            target="_blank"
-            rel="noopener noreferrer"
-            >LinkedIn <span aria-hidden="true">↗</span></a
-          ><a
-            href="https://github.com/degydev"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub <span aria-hidden="true">↗</span></a
-          ><a
-            href="https://gitconnected.com/degydev/resume"
-            target="_blank"
-            rel="noopener noreferrer"
-            >View CV <span aria-hidden="true">↗</span></a
-          ><a
-            href="https://stackoverflow.com/users/6350299/munkhdelger-tumenbayar"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Stack Overflow <span aria-hidden="true">↗</span></a
-          >
-        </div>
-      </section>
-    </main>
-    <footer class="site-footer section-shell">
-      <a class="wordmark" href="#about"
-        >degydev<span class="wordmark-dot">/</span></a
-      >
-      <p>Thoughtfully engineered. Always evolving.</p>
-      <span class="mono"
-        >© <span id="year">2026</span> Munkhdelger Tumenbayar</span
-      ><button class="theme-toggle mono" hidden aria-pressed="false">
-        Light mode <span aria-hidden="true">◐</span>
-      </button>
-    </footer>
-    <dialog class="case-dialog" aria-labelledby="dialog-title">
-      <div class="dialog-top">
-        <span class="mono">SYSTEM NOTES</span
-        ><button class="dialog-close" aria-label="Close case study">
-          Close <span aria-hidden="true">×</span>
-        </button>
+        </article>
       </div>
-      <div class="dialog-content"></div>
-    </dialog>
-    <script type="module" src="js/main.js"></script>
+    </section>
+
+    <section class="section" id="current">
+      <span class="eyebrow">Right now</span>
+      <h2>Current Work</h2>
+      <p>
+        Senior Full-Stack Engineer at Ashid Capital, building Simple's
+        lending, scoring and collateral systems — architecture, component
+        design and technical direction across frontend, mobile and backend.
+      </p>
+      <p>Independent contract engineering in parallel: requirements through
+        deployment for outside clients.</p>
+      <div class="philosophy-grid" style="margin-top: 48px">
+        <div>
+          <h3>Make the difficult part invisible.</h3>
+          <p>Complex systems should not feel complex to the person using them.</p>
+        </div>
+        <div>
+          <h3>Own the whole flow.</h3>
+          <p>Frontend, backend and infrastructure are one product problem, not separate departments.</p>
+        </div>
+        <div>
+          <h3>Prototype before debating.</h3>
+          <p>A working experiment often answers questions faster than another meeting.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="education">
+      <span class="eyebrow">The foundation</span>
+      <h2>Education</h2>
+      <div class="exp-list">
+        <details>
+          <summary>
+            <span class="exp-date">2017 — 2022</span>
+            <span class="exp-role"
+              >MSc, Computer Science<small
+                >Mongolian University of Science and Technology</small
+              ></span
+            >
+            <span class="exp-plus">+</span>
+          </summary>
+          <div class="exp-body">Master's degree, Computer Science.</div>
+        </details>
+        <details>
+          <summary>
+            <span class="exp-date">2013 — 2017</span>
+            <span class="exp-role"
+              >BSc, Computer Science<small
+                >Mongolian University of Science and Technology</small
+              ></span
+            >
+            <span class="exp-plus">+</span>
+          </summary>
+          <div class="exp-body">Bachelor's degree, Computer Science.</div>
+        </details>
+      </div>
+    </section>
+
+    <section class="section" id="archive">
+      <span class="eyebrow">Everything else</span>
+      <h2>Archive</h2>
+      <div class="archive-table">
+        <div class="archive-row">
+          <span>01</span><span>2023—now</span
+          ><strong>Simple</strong><span>Fintech</span
+          ><span>Java · Spring · Angular · Flutter · Oracle · Redis · ActiveMQ</span>
+        </div>
+        <div class="archive-row">
+          <span>02</span><span>2019—2023</span
+          ><strong>Welfare (ehalamj.mn)</strong><span>Public sector</span
+          ><span>React · Spring Boot · Oracle</span>
+        </div>
+        <div class="archive-row">
+          <span>03</span><span>—</span
+          ><strong>GMMS</strong><span>Environmental programmes</span
+          ><span>Grant lifecycle management</span>
+        </div>
+        <div class="archive-row">
+          <span>04</span><span>—</span
+          ><strong>PlateWatch</strong><span>Experimental</span
+          ><span>Mobile OCR + web search</span>
+        </div>
+        <div class="archive-row">
+          <span>05</span><span>2019—2023</span
+          ><strong>eBarimt / 1072 / UB Smart Card</strong
+          ><span>Public infrastructure</span><span>Java · SQL</span>
+        </div>
+        <div class="archive-row">
+          <span>06</span><span>2019</span
+          ><strong>Avy.mn (Mongolian Properties)</strong><span>Marketplace</span
+          ><span>Symfony · AWS</span>
+        </div>
+        <div class="archive-row">
+          <span>07</span><span>2017—2019</span
+          ><strong>CRM/HRM + DISC (Ritus)</strong><span>Business software</span
+          ><span>PHP</span>
+        </div>
+        <div class="archive-row">
+          <span>08</span><span>—</span
+          ><strong>WebGPU keyboard experiment</strong><span>Personal</span
+          ><span>Three.js · WebGPU · TSL</span>
+        </div>
+        <div class="archive-row">
+          <span>09</span><span>—</span
+          ><strong>LAN Tetris</strong><span>Personal</span><span>Game</span>
+        </div>
+        <div class="archive-row">
+          <span>10</span><span>—</span
+          ><strong>Browser FPS</strong><span>Personal</span><span>Game</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="resume">
+      <span class="eyebrow">On paper</span>
+      <h2>Résumé.</h2>
+      <p>The full CV, kept current.</p>
+      <div class="link-list">
+        <a href="https://gitconnected.com/degydev/resume" target="_blank" rel="noopener noreferrer">View CV ↗</a>
+      </div>
+    </section>
+
+    <section class="section" id="links">
+      <span class="eyebrow">Elsewhere</span>
+      <h2>Links.</h2>
+      <div class="link-list">
+        <a href="https://www.linkedin.com/in/degydev/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        <a href="https://github.com/degydev" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        <a href="https://gitconnected.com/degydev" target="_blank" rel="noopener noreferrer">GitConnected ↗</a>
+        <a href="https://stackoverflow.com/users/6350299/munkhdelger-tumenbayar" target="_blank" rel="noopener noreferrer">Stack Overflow ↗</a>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <span class="eyebrow">End of specimen</span>
+      <h2>Have something difficult to build?</h2>
+      <div class="contact-links">
+        <a href="mailto:munkhdelger95@gmail.com">Email ↗</a>
+        <a href="https://www.linkedin.com/in/degydev/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        <a href="https://github.com/degydev" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        <a href="https://gitconnected.com/degydev/resume" target="_blank" rel="noopener noreferrer">Résumé ↗</a>
+      </div>
+    </section>
+
+    <script type="module">
+      import { initKeyboardNav } from "./js/keyboard-nav.js";
+
+      const status = document.getElementById("status");
+      const canvas = document.getElementById("stage");
+      const heroSpacer = document.getElementById("hero-spacer");
+      const canvasWrap = document.getElementById("canvas-wrap");
+      const heroCopy = document.getElementById("hero-copy");
+      const isDesktop = matchMedia("(min-width: 861px)").matches;
+
+      const tokens = {
+        ink: "#0d0c0a",
+        muted: "#3a352c",
+        surface: "#1a1815",
+        surfaceRaised: "#221f1b",
+        bg: "#f3ede0",
+        accentBright: "#ff4a1c",
+      };
+
+      const nav = initKeyboardNav({
+        canvas,
+        labelHost: document.body,
+        tokens,
+        onNavigate: (hash) => (status.textContent = "at #" + hash),
+      });
+      nav.ensureScene().then(() => (status.textContent = "scene ready"));
+
+      addEventListener("pointermove", (e) => {
+        nav.scene?.setPointer(e.clientX / innerWidth - 0.5, e.clientY / innerHeight - 0.5);
+      });
+
+      // Mobile gets a real flow layout (see the max-width: 860px block in
+      // CSS) — the keyboard sits in the column and scrolls away normally,
+      // no JS positioning needed. Only desktop needs the pin-to-corner
+      // math, since only desktop has the fixed-position shrink transition.
+      const hint = document.getElementById("hero-hint");
+      if (matchMedia("(pointer: coarse)").matches) {
+        hint.textContent = "Tap a key. Hold A S D F G / Z X C V B to navigate.";
+      }
+      if (isDesktop) {
+        // Two explicit pixel frames — hero and corner — interpolated
+        // directly. No CSS transform composition (origin/order-of-
+        // operations makes that fragile); plain left/top/width/height is
+        // easy to reason about.
+        let heroFrame, cornerFrame;
+        const computeFrames = () => {
+          // As big as the screen: the canvas spans nearly the full
+          // viewport (the headline overlays the top of it — the canvas is
+          // transparent and the keyboard itself sits lower in its own
+          // frame, so this doesn't collide with the text in practice).
+          // What actually made the keyboard look small before wasn't box
+          // width, it was box HEIGHT: the camera fits the keyboard to the
+          // vertical field of view, so a wide-but-short box just shows
+          // more empty space beside an unchanged-size keyboard. Height is
+          // what needs to grow.
+          const heroW = Math.min(2200, innerWidth);
+          const heroH = Math.min(1300, innerHeight);
+          heroFrame = {
+            left: innerWidth / 2 - heroW / 2,
+            top: innerHeight / 2 - heroH / 2,
+            width: heroW,
+            height: heroH,
+          };
+          // The pinned corner stays a fixed, small, absolute size — it
+          // should not scale with how big the hero was.
+          const cornerW = 220;
+          const cornerH = 138;
+          cornerFrame = {
+            left: innerWidth - 24 - cornerW,
+            top: 24,
+            width: cornerW,
+            height: cornerH,
+          };
+        };
+        computeFrames();
+        addEventListener("resize", computeFrames);
+
+        const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+        const lerp = (a, b, t) => a + (b - a) * t;
+        let ticking = false;
+        const updateScroll = () => {
+          ticking = false;
+          const total = heroSpacer.offsetHeight - innerHeight;
+          const rect = heroSpacer.getBoundingClientRect();
+          const progress = clamp(-rect.top / Math.max(total, 1), 0, 1);
+          const eased = progress * progress * (3 - 2 * progress);
+          canvasWrap.style.left = `${lerp(heroFrame.left, cornerFrame.left, eased)}px`;
+          canvasWrap.style.top = `${lerp(heroFrame.top, cornerFrame.top, eased)}px`;
+          canvasWrap.style.width = `${lerp(heroFrame.width, cornerFrame.width, eased)}px`;
+          canvasWrap.style.height = `${lerp(heroFrame.height, cornerFrame.height, eased)}px`;
+          heroCopy.style.opacity = String(clamp(1 - progress * 1.6, 0, 1));
+          heroCopy.style.transform = `translateX(-50%) translateY(${progress * 40}px)`;
+        };
+        addEventListener(
+          "scroll",
+          () => {
+            if (!ticking) {
+              ticking = true;
+              requestAnimationFrame(updateScroll);
+            }
+          },
+          { passive: true },
+        );
+        updateScroll();
+      }
+    </script>
   </body>
 </html>

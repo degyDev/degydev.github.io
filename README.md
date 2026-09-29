@@ -1,6 +1,6 @@
 # degydev portfolio
 
-Munkhdelger Tumenbayar's static portfolio. The site uses semantic HTML, CSS, local fonts, and browser JavaScript modules for navigation, skill selection, case studies, and theme switching.
+Munkhdelger Tumenbayar's static portfolio. The homepage uses the keyboard design: HTML, inline CSS, local fonts, and browser JavaScript modules with a checked-in Three.js keyboard bundle. Hold a highlighted key to navigate between portfolio sections.
 
 ## Start locally
 
@@ -11,14 +11,14 @@ Munkhdelger Tumenbayar's static portfolio. The site uses semantic HTML, CSS, loc
 
 ## Check the site
 
-With the local server running, run `npm test` in another terminal. Chrome must be installed for these Playwright checks. They cover navigation, case studies, responsive layouts, accessibility, theme persistence, and the no-JavaScript fallback. Reports and screenshots are saved to ignored `.preview/`.
+With the local server running, run `npm test` in another terminal. Chrome must be installed for these Playwright checks. They cover keyboard navigation, responsive layouts, asset loading, and the no-JavaScript fallback. Reports and screenshots are saved to ignored `.preview/`.
 
 There is no `build` or `preview` script in `package.json`. `npm run dev` starts a persistent server; it does not generate deployment files.
 
 ## Structure
 
 ```text
-index.html       Portfolio content and semantic layout
+index.html       Production keyboard homepage and portfolio content
 css/             Styles and motion preferences
 js/              Browser modules and checked-in keyboard scene bundle
 fonts/           Local fonts and licenses
