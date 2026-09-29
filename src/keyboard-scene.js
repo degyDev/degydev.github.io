@@ -43,6 +43,30 @@ function makeLetterTexture(letter, color) {
   return texture;
 }
 
+// The site mark (see images/mark.svg), redrawn to a canvas so it can sit on
+// the plate as a real decal instead of a flat image overlay.
+function makeLogoTexture(tokens) {
+  const size = 160;
+  const canvas = document.createElement("canvas");
+  canvas.width = canvas.height = size;
+  const ctx = canvas.getContext("2d");
+  const s = size / 100;
+  ctx.beginPath();
+  ctx.roundRect(0, 0, size, size, 20 * s);
+  ctx.fillStyle = tokens.ink;
+  ctx.fill();
+  ctx.save();
+  ctx.scale(s, s);
+  ctx.fillStyle = tokens.accentBright;
+  ctx.fill(new Path2D("M57 20v54H44a20 20 0 1 1 0-40h3V20ZM44 46a8 8 0 1 0 0 16h3V46Z"));
+  ctx.restore();
+  ctx.fillStyle = tokens.bg;
+  ctx.fillRect(65 * s, 62 * s, 12 * s, 12 * s);
+  const texture = new CanvasTexture(canvas);
+  texture.colorSpace = SRGBColorSpace;
+  return texture;
+}
+
 const ROWS = [
   { letters: "QWERTYUIOP", z: -1.05, offset: 0 },
   { letters: "ASDFGHJKL", z: 0, offset: 0.5 },
@@ -165,6 +189,21 @@ export async function initKeyboardScene(canvas, tokens, options = {}) {
   plate.receiveShadow = true;
   scene.add(plate);
   const plateTopY = 0;
+
+  // A small badge in the front-left corner of the deck, in the empty strip
+  // below the ZXCVBNM row — the one spot on the plate with no keys on it.
+  const logoGeometry = new PlaneGeometry(0.9, 0.9);
+  logoGeometry.rotateX(-Math.PI / 2);
+  const logoMesh = new Mesh(
+    logoGeometry,
+    new MeshBasicMaterial({
+      map: makeLogoTexture({ ink, accentBright, bg }),
+      transparent: true,
+      depthWrite: false,
+    }),
+  );
+  logoMesh.position.set(-plateWidth / 2 + 1.35, plateTopY + 0.006, 2.68);
+  scene.add(logoMesh);
 
   const capGeometry = new RoundedBoxGeometry(
     KEY_SIZE,
