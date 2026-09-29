@@ -1,4 +1,4 @@
-/* Component motion; src/motion.ts manages optional desktop wheel smoothing. */
+/* Motion describes connections. Native scrolling is never intercepted. */
 @media (prefers-reduced-motion: no-preference) {
   .reveal.is-pending {
     opacity: 0;
