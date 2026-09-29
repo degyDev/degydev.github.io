@@ -69,14 +69,10 @@ export function initKeyboardNav({ canvas, labelHost, tokens, onNavigate }) {
     }
   }
 
-  function onKeyDown(event) {
-    if (event.repeat) return;
-    const letter =
-      event.key.length === 1
-        ? event.key.toUpperCase()
-        : event.key === " "
-          ? " "
-          : null;
+  // Shared by real typing and clicking/tapping the 3D key directly — both
+  // are "pressing the key" as far as the scene and the hold-to-activate
+  // logic are concerned.
+  function beginPress(letter) {
     if (!letter || held.has(letter)) return;
     scene?.pressKey(letter);
     const def = NAV_KEYS[letter];
@@ -90,13 +86,7 @@ export function initKeyboardNav({ canvas, labelHost, tokens, onNavigate }) {
       navigateTo(def.hash);
     }, HOLD_MS);
   }
-  function onKeyUp(event) {
-    const letter =
-      event.key.length === 1
-        ? event.key.toUpperCase()
-        : event.key === " "
-          ? " "
-          : null;
+  function endPress(letter) {
     if (!letter) return;
     scene?.releaseKey(letter);
     const state = held.get(letter);
@@ -107,9 +97,15 @@ export function initKeyboardNav({ canvas, labelHost, tokens, onNavigate }) {
     hideLabel();
     if (state.activated) scene?.clearFocus();
   }
-
-  addEventListener("keydown", onKeyDown);
-  addEventListener("keyup", onKeyUp);
+  function keyEventLetter(event) {
+    if (event.key.length === 1) return event.key.toUpperCase();
+    return event.key === " " ? " " : null;
+  }
+  addEventListener("keydown", (event) => {
+    if (event.repeat) return;
+    beginPress(keyEventLetter(event));
+  });
+  addEventListener("keyup", (event) => endPress(keyEventLetter(event)));
   addEventListener("blur", () => {
     for (const [letter, state] of held) {
       scene?.releaseKey(letter);
@@ -119,6 +115,31 @@ export function initKeyboardNav({ canvas, labelHost, tokens, onNavigate }) {
     held.clear();
     hideLabel();
   });
+
+  // Clicking/tapping a key directly is the same "press" — useful on touch
+  // devices with no physical keyboard, and just more discoverable.
+  const pointerLetters = new Map(); // pointerId -> letter
+  canvas?.addEventListener("pointerdown", (event) => {
+    if (!scene) return;
+    const rect = canvas.getBoundingClientRect();
+    const letter = scene.hitTestKey(
+      event.clientX - rect.left,
+      event.clientY - rect.top,
+    );
+    if (!letter) return;
+    pointerLetters.set(event.pointerId, letter);
+    canvas.setPointerCapture?.(event.pointerId);
+    beginPress(letter);
+  });
+  function releasePointer(event) {
+    const letter = pointerLetters.get(event.pointerId);
+    if (letter === undefined) return;
+    pointerLetters.delete(event.pointerId);
+    endPress(letter);
+  }
+  canvas?.addEventListener("pointerup", releasePointer);
+  canvas?.addEventListener("pointercancel", releasePointer);
+  canvas?.addEventListener("pointerleave", releasePointer);
 
   // A loaded URL with a hash restores the matching section directly (no
   // animated scroll — it should look like the page opened there); browser

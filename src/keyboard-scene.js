@@ -9,6 +9,7 @@ import {
   Group,
   BoxGeometry,
   RingGeometry,
+  PlaneGeometry,
   Mesh,
   MeshStandardMaterial,
   MeshBasicMaterial,
@@ -17,8 +18,30 @@ import {
   HemisphereLight,
   DoubleSide,
   Color,
+  CanvasTexture,
+  SRGBColorSpace,
+  Raycaster,
+  Vector2,
 } from "three/webgpu";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
+
+// A crisp, code-drawn legend beats trying to match a photographed keycap
+// texture — no image asset needed, and it stays sharp at any size.
+function makeLetterTexture(letter, color) {
+  const size = 128;
+  const canvas = document.createElement("canvas");
+  canvas.width = canvas.height = size;
+  const ctx = canvas.getContext("2d");
+  ctx.font =
+    '600 66px -apple-system, "SF Pro Display", system-ui, sans-serif';
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillStyle = color;
+  ctx.fillText(letter, size / 2, size / 2 + 4);
+  const texture = new CanvasTexture(canvas);
+  texture.colorSpace = SRGBColorSpace;
+  return texture;
+}
 
 const ROWS = [
   { letters: "QWERTYUIOP", z: -1.05, offset: 0 },
@@ -140,6 +163,11 @@ export async function initKeyboardScene(canvas, tokens) {
     0.035,
   );
 
+  // One small plane per key, textured with that key's letter and parented
+  // to the keycap so it presses down and tilts with it.
+  const legendGeometry = new PlaneGeometry(KEY_SIZE * 0.5, KEY_SIZE * 0.5);
+  legendGeometry.rotateX(-Math.PI / 2);
+
   const keys = new Map();
   const keyGroup = new Group();
   scene.add(keyGroup);
@@ -149,6 +177,19 @@ export async function initKeyboardScene(canvas, tokens) {
     const restY = plateTopY + KEY_HEIGHT / 2 + 0.012;
     mesh.position.set(position.x, restY, position.z);
     mesh.castShadow = true;
+    mesh.userData.letter = letter;
+    if (letter !== " ") {
+      const legend = new Mesh(
+        legendGeometry,
+        new MeshBasicMaterial({
+          map: makeLetterTexture(letter, ink),
+          transparent: true,
+          depthWrite: false,
+        }),
+      );
+      legend.position.y = KEY_HEIGHT / 2 + 0.002;
+      mesh.add(legend);
+    }
     keyGroup.add(mesh);
     keys.set(letter, {
       mesh,
@@ -219,6 +260,18 @@ export async function initKeyboardScene(canvas, tokens) {
     const vector = { x: entry.x, y: entry.restY + 0.4, z: entry.z };
     const projected = projectToScreen(vector, camera, width, height);
     return projected;
+  }
+
+  // Clicking/tapping a key: x, y are CSS pixels relative to the canvas.
+  const raycaster = new Raycaster();
+  const pointerNdc = new Vector2();
+  const keyMeshes = [...keys.values()].map((entry) => entry.mesh);
+  function hitTestKey(x, y) {
+    if (!width || !height) return null;
+    pointerNdc.set((x / width) * 2 - 1, -(y / height) * 2 + 1);
+    raycaster.setFromCamera(pointerNdc, camera);
+    const hit = raycaster.intersectObjects(keyMeshes, false)[0];
+    return hit ? hit.object.userData.letter : null;
   }
 
   let width = 1;
@@ -314,6 +367,7 @@ export async function initKeyboardScene(canvas, tokens) {
     activateKey,
     clearFocus,
     getKeyScreenPosition,
+    hitTestKey,
     start,
     stop,
     destroy,
